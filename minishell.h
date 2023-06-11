@@ -84,9 +84,9 @@ In this structure, name represents the name of the environment variable, value s
 its corresponding value, and next is a pointer to the next environment variable in 
 the linked list.*/
 typedef struct	s_process {
-    pid_t				pid;
-    int					status;
-    char				*command;
+    pid_t               pid;
+    int                 status;
+    char                *command;
     struct s_process	*next;
 }				t_process;
 /*
