@@ -1,35 +1,53 @@
 #include "minishell.h"
 
-t_env_variable  *create_env_node(char *name, char *value)
+char    *find_path(char **envp)
 {
-    t_env_variable  *node;
-
-    node = malloc(sizeof(t_env_variable));
-    if (!node)
-        return (NULL);
-    node->name = ft_strdup(name);
-    node->value = ft_strdup(value);
-    node->next = NULL;
-    return (node);  
+	while (*envp && ft_strncmp("PATH=", *envp, 5))
+		envp++;
+	if (*envp == NULL)
+		return (NULL);
+	return (*envp + 5);
 }
 
-void add_env_node(t_env_variable **head, const char *name, const char *value)
+char    *find_pwd(char **envp)
 {
-    t_env_variable *node;
-    
-    node = create_env_node(name, value);
-    if (node)
-        ft_lstadd_back(head, node);
+    while (*envp && ft_strncmp("PWD=", *envp, 4))
+        envp++;
+    if (*envp == NULL)
+        return (NULL);
+    return (*envp + 4);
+}
+
+char    *find_shlvl(char **envp)
+{
+    while (*envp && ft_strncmp("SHLVL=", *envp, 6))
+        envp++;
+    if (*envp == NULL)
+        return (NULL);
+    return (*envp + 6);
+}
+
+char    *find_underscore(char **envp)
+{
+    while (*envp && ft_strncmp("_=", *envp, 2))
+        envp++;
+    if (*envp == NULL)
+        return (NULL);
+    return (*envp + 2);
 }
 
 t_env_variable  *create_default_env(void)
 {
-    t_env_variable *head;
+    t_env_variable  *env;
 
-    head = NULL;
-    add_env_node(&head, "PWD", PWD_PATH);
-    add_env_node(&head, "PATH", PATH);
-    add_env_node(&head, "SHLVL", "1");
-    add_env_node(&head, "_", "./minishell";)
-    return (head);
+    env = malloc(sizeof(t_env_variable));
+    if (!env)
+        return (NULL);
+    env->envp = NULL;
+    env->path = PATH;
+    env->pwd = PWD_PATH;
+    env->oldpwd = NULL;
+    env->shlvl = SHLVL;
+    env->underscore = UNDERSCORE;
+    return (env);
 }

@@ -3,16 +3,19 @@
 int main(int argc, char **argv, char **envp)
 {
     t_minishell *minishell;
+    (void)argc;
+    (void)argv;
 
     minishell = init_structs(envp);
 
     // Temporary printf to check the env linked list
-    t_env_variable *env = minishell->t_env_variable;
-    while (env != NULL)
+    int i = 0;
+    while (envp[i])
     {
-        printf("Name: %s, Value: %s\n", env->name, env->value);
-        env = env->next;
+        printf("%s\n", envp[i]);
+        i++;
     }
+    free_structs(minishell, 5);
 
 
 

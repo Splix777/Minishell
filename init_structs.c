@@ -8,20 +8,20 @@ t_minishell *init_structs(char** envp)
     if (!minishell)
         return (NULL);
     memset(minishell, 0, sizeof(t_minishell));
-    minishell->t_command = init_command();
-    if (minishell->t_command == NULL)
+    minishell->command = init_command();
+    if (minishell->command == NULL)
         free_structs(minishell, 1);
-    minishell->t_history = init_history();
-    if (minishell->t_history == NULL)
+    minishell->history = init_history();
+    if (minishell->history == NULL)
         free_structs(minishell, 2);
-    minishell->t_process = init_process();
-    if (minishell->t_process == NULL)
+    minishell->process = init_process();
+    if (minishell->process == NULL)
         free_structs(minishell, 3);
     if (!envp)
-        minishell->t_env_variable = create_env_node();
+        minishell->env = create_default_env();
     else
-        minishell->t_env_variable = init_env(envp);
-    if (minishell->t_env_variable == NULL)
+        minishell->env = init_env(envp);
+    if (minishell->env == NULL)
         free_structs(minishell, 4);
     return (minishell);
 }
@@ -60,31 +60,18 @@ t_history   *init_history(void)
 
 t_env_variable  *init_env(char **envp)
 {
-    t_env_variable  *head;
-    t_env_variable  *node;
-    char            *name;
-    char            *value;
+    t_env_variable  *env;
 
-    while (*envp != NULL)
-    {
-        name = ft_strdup(*envp);
-        value = ft_strchr(name, '=');
-        if (value != NULL)
-        {
-            *value = '\0';
-            value++;
-            node = create_env_node(name, value);
-            if (!node)
-            {
-                ft_lstclear(&head, free);
-                return (NULL);
-            }
-            ft_lstadd_back(&head, node);
-        }
-        free(name);
-        envp++;
-    }
-    return (head);
+    env = malloc(sizeof(t_env_variable));
+    if (!env)
+        return (NULL);
+    env->envp = envp;
+    env->path = find_path(envp);
+    env->pwd = find_pwd(envp);
+    env->oldpwd = NULL;
+    env->shlvl = find_shlvl(envp);
+    env->underscore = find_underscore(envp);
+    return (env);
 }
 
 t_process *init_process(void)
