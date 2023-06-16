@@ -21,8 +21,6 @@ t_minishell *init_structs(char** envp)
     if (minishell->builtins == NULL)
         free_structs(minishell);
     minishell->env = init_env(envp);
-    if (minishell->env == NULL)
-        free_structs(minishell);
     return (minishell);
 }
 
@@ -80,6 +78,8 @@ t_env  *init_env(char **envp)
 
     head = NULL;
     i = 0;
+    if (!envp)
+        return (head);
     while (envp[i])
     {
         env = malloc(sizeof(t_env));

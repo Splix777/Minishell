@@ -69,10 +69,7 @@ char    *display_prompt(t_minishell *minishell)
     if (!user)
         user = "guest";
     if (getcwd(pwd, sizeof(pwd)) == NULL)
-    {
-        perror("getcwd");
-        free_structs(minishell);
-    }
+        pwd[0] = '\0';
     total_len += ft_strlen(user);
     total_len += ft_strlen(pwd);
     prompt = multi_strjoin(total_len, 8, COLOR_BLUE, user, "@minishell: ", COLOR_GREEN, pwd, "$ ", RESET, "\0");

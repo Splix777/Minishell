@@ -145,17 +145,18 @@ typedef struct s_minishell
 }								t_minishell;
 /* GLOBAL*/
 
-extern t_minishell *minishell;
+// extern t_minishell *minishell;
 
 // errors/checks_exits.c
-void							free_structs(t_minishell *minishell);
+void	free_structs(t_minishell *minishell);
+int		line_empty(char *line);
 // initialize/init_structs.c
-t_minishell						*init_structs(char **envp);
-t_env							*init_env(char **envp);
-t_command						*init_command(void);
-t_history						*init_history(void);
-t_builtins						*init_builtins(void);
-t_process						*init_process(void);
+t_minishell	*init_structs(char **envp);
+t_env		*init_env(char **envp);
+t_command	*init_command(void);
+t_history	*init_history(void);
+t_builtins	*init_builtins(void);
+t_process	*init_process(void);
 // initialize/env_lst_utils.c
 void	add_env(t_env **head, t_env *env);
 void	ft_envclear(t_env **lst);

@@ -1,21 +1,5 @@
 #include "./include/minishell.h"
 
-static int line_empty(char *line)
-{
-    int i;
-
-    i = 0;
-    if (!line)
-        return (TRUE);
-    while (line[i])
-    {
-        if (line[i] != 32 && (line[i] >= 9 && line[i] <= 13))
-            return (FALSE);
-        i++;
-    }
-    return (TRUE);
-}
-
 int main(int argc, char **argv, char **envp)
 {
     t_minishell *minishell;
@@ -32,6 +16,8 @@ int main(int argc, char **argv, char **envp)
         listen_signals();
         if (line_empty(line) == FALSE)
         {
+            add_history(line);
+
 
         }
         free(line);
