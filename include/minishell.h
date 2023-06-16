@@ -40,6 +40,9 @@
 
 // MAX_PATH for getcwd
 # define MAX_PATH 1016
+// BOOL
+# define TRUE 1
+# define FALSE 0
 // Pipes
 # define READ_END 0
 # define WRITE_END 1

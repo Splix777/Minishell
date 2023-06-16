@@ -79,10 +79,6 @@ t_env  *init_env(char **envp)
     int     i;
 
     head = NULL;
-    head = malloc(sizeof(t_env));
-    memset(head, 0, sizeof(t_env));
-    if (!head)
-        return (NULL);
     i = 0;
     while (envp[i])
     {

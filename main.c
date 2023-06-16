@@ -1,19 +1,19 @@
 #include "./include/minishell.h"
 
-static int line_is_empty(char *line)
+static int line_empty(char *line)
 {
     int i;
 
     i = 0;
     if (!line)
-        return (1);
+        return (TRUE);
     while (line[i])
     {
         if (line[i] != 32 && (line[i] >= 9 && line[i] <= 13))
-            return (0);
+            return (FALSE);
         i++;
     }
-    return (1);
+    return (TRUE);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -30,7 +30,7 @@ int main(int argc, char **argv, char **envp)
     while (line)
     {
         listen_signals();
-        if (!line_is_empty(line))
+        if (line_empty(line) == FALSE)
         {
 
         }
