@@ -35,11 +35,19 @@
 // access, getcwd, chdir, unlink, dup, dup2, pipe, isatty, ttyname, ttyslot,
 // tcsetattr, tcgetattr, ioctl, getenv
 # include <unistd.h>
-
+// Manually assigning ENV
 # define PWD_PATH "/Users/fsalazar/Desktop/minishell"
 # define PATH "/Users/fsalazar/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 # define SHLVL "SHLVL=1"
 # define UNDERSCORE "/Users/fsalazar/Desktop/minishell/./minishell"
+// Pipes
+# define READ_END 0
+# define WRITE_END 1
+// Parsing
+# define CHARACTER
+# define SYMBOL
+// Prompt
+
 
 typedef struct s_minishell		t_minishell;
 typedef struct s_command		t_command;
@@ -107,6 +115,13 @@ typedef struct s_process
 	char						*command;
 	struct s_process			*next;
 }								t_process;
+
+typedef struct	s_builtins
+{
+	char.	*cmd;
+	void	(*f)(t_minishell*);
+
+}				t_builtins;
 /*
 Here, pid holds the process ID of the child process,
 	status represents its exit status, 
@@ -115,11 +130,17 @@ command stores the command associated with the process,
 process in the linked list.*/
 typedef struct s_minishell
 {
-	t_command *command;  // Structure for command-related data
-	t_history *history;  // Structure for command history data
-	t_env_variable *env; // Structure for environment variables data
-	t_process *process;  // Structure for signal handling data
+	int				exit_code;
+	t_builtins		*builtins; // Structure for builtin cmds
+	t_command		*command;  // Structure for command-related data
+	t_history		*history;  // Structure for command history data
+	t_env_variable	*env; // Structure for environment variables data
+	t_process		*process;  // Structure for signal handling data
 }								t_minishell;
+/* GLOBAL*/
+
+extern t_minishell *minishell;
+
 // init_structs.c
 t_minishell						*init_structs(char **envp);
 t_command						*init_command(void);

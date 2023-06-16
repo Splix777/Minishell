@@ -1,5 +1,12 @@
 #include "minishell.h"
 
+void    display_prompt(t_minishell *minishell)
+{
+    char    *prompt;
+
+    prompt = minishel
+}
+
 int main(int argc, char **argv, char **envp)
 {
     t_minishell *minishell;
@@ -7,27 +14,11 @@ int main(int argc, char **argv, char **envp)
     (void)argv;
 
     minishell = init_structs(envp);
-
-    // Temporary printf to check the env linked list
-    int i = 0;
-    while (envp[i])
-    {
-        printf("%s\n", envp[i]);
-        i++;
-    }
-    free_structs(minishell, 5);
-
-
-
-
-
-
-
-
-    // Display the initial shell prompt
-    
+    display_prompt(minishell); // Display the initial shell prompt
+}   
+    //while (1)
     // Enter the main loop for reading and executing commands
-    while (1) {
+
         // Read user input
         
         // Parse the input and construct the command structure
@@ -39,8 +30,4 @@ int main(int argc, char **argv, char **envp)
         // Cleanup any dynamically allocated memory or resources
         
         // Display the prompt for the next command
-    }
     
-    return (0);
-}
-
