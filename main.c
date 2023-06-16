@@ -37,8 +37,8 @@ int main(int argc, char **argv, char **envp)
         free(line);
         line = readline(prompt);
     }
-    free(line);
     free(prompt);
+    free(line);
     free_structs(minishell);
 }
 

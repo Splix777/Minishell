@@ -56,7 +56,7 @@ char    *display_prompt(t_minishell *minishell)
 {
     char    *prompt;
     char    *user;
-    char    *pwd;
+    char    pwd[MAX_PATH];
     int     total_len;
 
     total_len = 0;
@@ -68,9 +68,11 @@ char    *display_prompt(t_minishell *minishell)
     user = find_env_var(minishell, "USER");
     if (!user)
         user = "guest";
-    pwd = find_env_var(minishell, "PWD");
-    if (!pwd)
-        pwd = "/";
+    if (getcwd(pwd, sizeof(pwd)) == NULL)
+    {
+        perror("getcwd");
+        free_structs(minishell);
+    }
     total_len += ft_strlen(user);
     total_len += ft_strlen(pwd);
     prompt = multi_strjoin(total_len, 8, COLOR_BLUE, user, "@minishell: ", COLOR_GREEN, pwd, "$ ", RESET, "\0");

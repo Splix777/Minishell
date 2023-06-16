@@ -38,11 +38,8 @@
 // va_arg, va_start, va_end
 # include <stdarg.h>
 
-// Manually assigning ENV
-# define PWD_PATH "/Users/fsalazar/Desktop/minishell"
-# define PATH "/Users/fsalazar/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
-# define SHLVL "SHLVL=1"
-# define UNDERSCORE "/Users/fsalazar/Desktop/minishell/./minishell"
+// MAX_PATH for getcwd
+# define MAX_PATH 1016
 // Pipes
 # define READ_END 0
 # define WRITE_END 1
