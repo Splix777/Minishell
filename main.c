@@ -17,10 +17,16 @@ int main(int argc, char **argv, char **envp)
         if (line_empty(line) == FALSE)
         {
             add_history(line);
-
-
+            if (parse_command(minishell, line))
+            {
+                
+            }
+            else
+                minishell->exit_status = 1;
         }
         free(line);
+        free(prompt);
+        prompt = display_prompt(minishell);
         line = readline(prompt);
     }
     free(prompt);
