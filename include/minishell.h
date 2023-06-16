@@ -35,6 +35,9 @@
 // access, getcwd, chdir, unlink, dup, dup2, pipe, isatty, ttyname, ttyslot,
 // tcsetattr, tcgetattr, ioctl, getenv
 # include <unistd.h>
+// va_arg, va_start, va_end
+# include <stdarg.h>
+
 // Manually assigning ENV
 # define PWD_PATH "/Users/fsalazar/Desktop/minishell"
 # define PATH "/Users/fsalazar/.brew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -46,8 +49,14 @@
 // Parsing
 # define CHARACTER
 # define SYMBOL
-// Prompt
-
+// Colors
+# define RESET "\033[0m"
+# define COLOR_GREEN "\033[0;32m"
+# define COLOR_BLUE "\033[0;34m"
+// Stack
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 typedef struct s_minishell		t_minishell;
 typedef struct s_command		t_command;
@@ -138,9 +147,6 @@ typedef struct s_minishell
 
 extern t_minishell *minishell;
 
-// main.c
-char    *find_env_var(t_minishell *minishell, char *var);
-char	*display_prompt(t_minishell *minishell);
 // errors/checks_exits.c
 void							free_structs(t_minishell *minishell);
 // initialize/init_structs.c
@@ -155,6 +161,15 @@ void	add_env(t_env **head, t_env *env);
 void	ft_envclear(t_env **lst);
 void	ft_envdelone(t_env *lst);
 t_env	*ft_envlast(t_env *lst);
+// initialize/display_prompt.c
+char	*ft_strcat(char *dest, const char *src);
+char	*multi_strjoin(int total_len, int count, ...);
+char    *find_env_var(t_minishell *minishell, char *var);
+char	*display_prompt(t_minishell *minishell);
+// signals/signals.c
+void    sigint_handler(int sig);
+void    sigquit_handler(int sig);
+void    listen_signals(void);
 // builtins/ft_echo.c
 void	ft_echo(t_minishell *minishell);
 // builtins/ft_cd.c

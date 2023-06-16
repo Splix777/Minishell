@@ -13,13 +13,15 @@ SRCS = main.c \
 	   errors/free_exit.c \
 	   initialize/init_structs.c \
 	   initialize/env_lst_utils.c \
+	   initialize/display_prompt.c \
 	   builtins/ft_cd.c \
 	   builtins/ft_echo.c \
 	   builtins/ft_env.c \
 	   builtins/ft_exit.c \
 	   builtins/ft_export.c \
 	   builtins/ft_pwd.c \
-	   builtins/ft_unset.c
+	   builtins/ft_unset.c \
+	   signals/signals.c \
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

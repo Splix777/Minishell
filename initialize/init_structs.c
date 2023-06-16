@@ -92,7 +92,7 @@ t_env  *init_env(char **envp)
             ft_envclear(&head);
             return (NULL);
         }
-        env->name = ft_substr(envp[i], 0, ft_strchr(envp[i], '=') - envp[i]);
+        env->name = ft_substr(envp[i], 0, (ft_strchr(envp[i], '=') - envp[i]) + 1);
         env->value = ft_strdup(ft_strchr(envp[i], '=') + 1);
         env->next = NULL;
         add_env(&head, env);
