@@ -2,16 +2,26 @@ NAME = minishell
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g
+LDFLAGS = -lreadline
 
 RM = rm -f
 
-SRC = main.c \
-      checks_exits.c \
-      init_structs.c \
-      init_utils.c
+SRC_DIR = .
+OBJ_DIR = obj
 
-OBJ_DIR = OBJ
-OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+SRCS = main.c \
+	   errors/free_exit.c \
+	   initialize/init_structs.c \
+	   initialize/env_lst_utils.c \
+	   builtins/ft_cd.c \
+	   builtins/ft_echo.c \
+	   builtins/ft_env.c \
+	   builtins/ft_exit.c \
+	   builtins/ft_export.c \
+	   builtins/ft_pwd.c \
+	   builtins/ft_unset.c
+
+OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 
 GREEN = \033[0;32m
 YELLOW = \033[0;33m
@@ -24,12 +34,12 @@ LIBFT = $(LIBFT_DIR)/libft.a
 
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJ) -L$(LIBFT_DIR) -lft
+$(NAME): $(OBJS) $(LIBFT)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) $(LDFLAGS) -lft
 	@echo "$(GREEN)$(CHECKMARK) $(NAME) created.$(RESET)"
 
-$(OBJ_DIR)/%.o: %.c
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT):

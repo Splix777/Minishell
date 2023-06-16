@@ -58,12 +58,10 @@ CC_FLAGS = -Wall -Wextra -Werror
 
 $(OBJS_DIR)%.o : %.c libft.h
 	@mkdir -p $(OBJS_DIR)
-	@echo "Compiling: $<"
 	@$(CC) $(CC_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJECTS_PREFIXED)
 	@ar rcs $(NAME) $(OBJECTS_PREFIXED)
-	@echo "Complete"
 
 all: $(NAME)
 

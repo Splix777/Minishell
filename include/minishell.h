@@ -2,7 +2,7 @@
 # define MINISHELL_H
 
 // libft
-# include "libft/libft.h"
+# include "../libft/libft.h"
 // readline, add_history
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -93,15 +93,12 @@ executed or added to the history.
 next: A pointer to the next entry in the history,
 	allowing you to maintain a linked 
 list of history entries.*/
-typedef struct s_env_variable
+typedef struct s_env
 {
-	char						**envp;
-	char						*path;
-	char						*pwd;
-	char						*oldpwd;
-	char						*shlvl;
-	char						*underscore;
-}								t_env_variable;
+	char						*name;
+	char						*value;
+	struct s_env				*next;
+}								t_env;
 /*
 In this structure, name represents the name of the environment variable,
 	value stores 
@@ -118,8 +115,8 @@ typedef struct s_process
 
 typedef struct	s_builtins
 {
-	char.	*cmd;
-	void	(*f)(t_minishell*);
+	char	*cmd[7];
+	void	(*func[7])(t_minishell*);
 
 }				t_builtins;
 /*
@@ -130,30 +127,48 @@ command stores the command associated with the process,
 process in the linked list.*/
 typedef struct s_minishell
 {
-	int				exit_code;
-	t_builtins		*builtins; // Structure for builtin cmds
-	t_command		*command;  // Structure for command-related data
-	t_history		*history;  // Structure for command history data
-	t_env_variable	*env; // Structure for environment variables data
-	t_process		*process;  // Structure for signal handling data
+	int				exit_status;
+	t_builtins		*builtins;	// Structure for builtin cmds
+	t_command		*command; 	// Structure for command-related data
+	t_history		*history; 	// Structure for command history data
+	t_env			*env;		// Structure for environment variables data
+	t_process		*process;	// Structure for signal handling data
 }								t_minishell;
 /* GLOBAL*/
 
 extern t_minishell *minishell;
 
-// init_structs.c
+// main.c
+char    *find_env_var(t_minishell *minishell, char *var);
+char	*display_prompt(t_minishell *minishell);
+// errors/checks_exits.c
+void							free_structs(t_minishell *minishell);
+// initialize/init_structs.c
 t_minishell						*init_structs(char **envp);
+t_env							*init_env(char **envp);
 t_command						*init_command(void);
 t_history						*init_history(void);
-t_env_variable					*init_env(char **envp);
+t_builtins						*init_builtins(void);
 t_process						*init_process(void);
-// checks_exits.c
-void							free_structs(t_minishell *minishell, int which);
-// init_utils.c
-char							*find_path(char **envp);
-char							*find_pwd(char **envp);
-char							*find_shlvl(char **envp);
-char							*find_underscore(char **envp);
-t_env_variable					*create_default_env(void);
+// initialize/env_lst_utils.c
+void	add_env(t_env **head, t_env *env);
+void	ft_envclear(t_env **lst);
+void	ft_envdelone(t_env *lst);
+t_env	*ft_envlast(t_env *lst);
+// builtins/ft_echo.c
+void	ft_echo(t_minishell *minishell);
+// builtins/ft_cd.c
+void	ft_cd(t_minishell *minishell);
+// builtins/ft_pwd.c
+void	ft_pwd(t_minishell *minishell);
+// builtins/ft_export.c
+void	ft_export(t_minishell *minishell);
+// builtins/ft_unset.c
+void	ft_unset(t_minishell *minishell);
+// builtins/ft_env.c
+void	ft_env(t_minishell *minishell);
+// builtins/ft_exit.c
+void	ft_exit(t_minishell *minishell);
+
 
 #endif
