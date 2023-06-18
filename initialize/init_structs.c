@@ -11,8 +11,8 @@ t_minishell *init_structs(char** envp)
     minishell->command = init_command();
     if (minishell->command == NULL)
         free_structs(minishell);
-    minishell->history = init_history();
-    if (minishell->history == NULL)
+    minishell->tokens = init_history();
+    if (minishell->tokens == NULL)
         free_structs(minishell);
     minishell->process = init_process();
     if (minishell->process == NULL)
@@ -39,21 +39,19 @@ t_command   *init_command(void)
     command->here_doc = FALSE;
     command->here_doc_delimiter = NULL;
     command->here_document_lines = NULL;
-    command->background_execution = FALSE;
     return (command);
 }
 
-t_history   *init_history(void)
+t_token   *init_tokens(void)
 {
-    t_history *history;
+    t_token *token;
     
-    history = malloc(sizeof(t_history));
-    if (!history) 
+    token = malloc(sizeof(t_token));
+    if (!token) 
         return (NULL);
-    history->command = NULL;
-    history->timestamp = 0;
-    history->next = NULL;
-    return (history);
+    token->token = NULL;
+    token->type = 0;
+    return (token);
 }
 
 t_process *init_process(void)

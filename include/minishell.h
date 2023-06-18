@@ -60,7 +60,7 @@
 
 typedef struct s_minishell		t_minishell;
 typedef struct s_command		t_command;
-typedef struct s_history		t_history;
+typedef struct s_token			t_token;
 typedef struct s_env_variable	t_env_variable;
 typedef struct s_process		t_process;
 
@@ -76,44 +76,21 @@ typedef struct s_command
 	char						**here_document_lines;
 	struct s_command			*next;
 }								t_command;
-/*
-cmd: A string to store the command name.
-cmd_args: A pointer to a string array (char**) to store the command arguments.
-input_redirection: A string to store the input redirection file name or descriptor.
-output_redirection: A string to store the output redirection file name or descriptor.
-append_mode: An integer flag indicating whether the output redirection should be performed 
-in append mode.
-here_doc: An integer flag indicating whether the command uses a here document for input.
-here_doc_delimiter: A string to store the delimiter for the here document.
-here_document_lines: A pointer to a string array (char**) to store the lines of input 
-for the here document.
-background_execution: An integer flag indicating whether the command should be executed 
-in the background.*/
-typedef struct s_history
+
+typedef struct s_token
 {
-	char						*command;
-	time_t						timestamp;
-	struct s_history			*next;
-}								t_history;
-/*
-command: A string to store the command entered by the user.
-timestamp: A time_t variable to store the timestamp indicating when the command was 
-executed or added to the history.
-next: A pointer to the next entry in the history,
-	allowing you to maintain a linked 
-list of history entries.*/
+	char						*token;
+	int							type;
+	struct s_token				*next;
+}								t_token;
+
 typedef struct s_env
 {
 	char						*name;
 	char						*value;
 	struct s_env				*next;
 }								t_env;
-/*
-In this structure, name represents the name of the environment variable,
-	value stores 
-its corresponding value,
-	and next is a pointer to the next environment variable in 
-the linked list.*/
+
 typedef struct s_process
 {
 	pid_t						pid;
@@ -139,7 +116,7 @@ typedef struct s_minishell
 	int				exit_status;
 	t_builtins		*builtins;	// Structure for builtin cmds
 	t_command		*command; 	// Structure for command-related data
-	t_history		*history; 	// Structure for command history data
+	t_token			*tokens; 	// Structure for command history data
 	t_env			*env;		// Structure for environment variables data
 	t_process		*process;	// Structure for signal handling data
 }								t_minishell;
@@ -154,7 +131,7 @@ int		line_empty(char *line);
 t_minishell	*init_structs(char **envp);
 t_env		*init_env(char **envp);
 t_command	*init_command(void);
-t_history	*init_history(void);
+t_token		*init_tokens(void);
 t_builtins	*init_builtins(void);
 t_process	*init_process(void);
 // initialize/env_lst_utils.c

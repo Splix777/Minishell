@@ -7,8 +7,8 @@ void    free_structs(t_minishell *minishell)
     exit_status = minishell->exit_status;
     if (minishell->command != NULL)
         free(minishell->command);
-    if (minishell->history != NULL)
-        free(minishell->history);
+    if (minishell->tokens != NULL)
+        free(minishell->tokens);
     if (minishell->process != NULL)
         free(minishell->process);
     if (minishell->builtins != NULL)
