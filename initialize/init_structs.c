@@ -11,7 +11,7 @@ t_minishell *init_structs(char** envp)
     minishell->command = init_command();
     if (minishell->command == NULL)
         free_structs(minishell);
-    minishell->tokens = init_history();
+    minishell->tokens = init_tokens();
     if (minishell->tokens == NULL)
         free_structs(minishell);
     minishell->process = init_process();

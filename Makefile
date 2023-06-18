@@ -22,6 +22,9 @@ SRCS = main.c \
 	   builtins/ft_pwd.c \
 	   builtins/ft_unset.c \
 	   signals/signals.c \
+	   lexer/lexer.c \
+	   lexer/lexer_utils.c \
+	   lexer/lexer_lst_utils.c \
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

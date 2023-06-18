@@ -47,12 +47,14 @@
 # define READ_END 0
 # define WRITE_END 1
 // Parsing
-# define CHARACTER
-# define SYMBOL
+# define QUOTE 0
+# define SYMBOL 1
+# define COMMAND 2
 // Colors
 # define RESET "\033[0m"
 # define COLOR_GREEN "\033[0;32m"
 # define COLOR_BLUE "\033[0;34m"
+# define COLOR_RED "\033[0;31m"
 // Stack
 # define STDIN 0
 # define STDOUT 1
@@ -120,9 +122,6 @@ typedef struct s_minishell
 	t_env			*env;		// Structure for environment variables data
 	t_process		*process;	// Structure for signal handling data
 }								t_minishell;
-/* GLOBAL*/
-
-// extern t_minishell *minishell;
 
 // errors/checks_exits.c
 void	free_structs(t_minishell *minishell);
@@ -148,6 +147,22 @@ char	*display_prompt(t_minishell *minishell);
 void    sigint_handler(int sig);
 void    sigquit_handler(int sig);
 void    listen_signals(void);
+
+
+// lexer/lexer.c
+int		parse_command(t_minishell *minishell, char *line);
+t_token	*tokenize_line(char *line);
+// lexer/lexer_utils.c
+int make_command(t_token **head, char *line, int i);
+int make_symbol(t_token **head, char *line, int i);
+int make_quote(t_token **head, char *line, int i);
+int is_quote(char c);
+int is_special_character(char c);
+// lexer/lexer_lst_utils.c
+void    add_token(t_token **head, char *content, int type);
+
+
+
 // builtins/ft_echo.c
 void	ft_echo(t_minishell *minishell);
 // builtins/ft_cd.c

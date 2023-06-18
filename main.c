@@ -1,38 +1,5 @@
 #include "./include/minishell.h"
 
-t_token	*tokenize_line(char *line)
-{
-	t_token	*head;
-	int		i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (is_special_character(line[i]) == FALSE)
-			i += make_command(&head, line, i);
-		else if (is_special_character(line[i]) == TRUE)
-			i += make_symbol(&head, line, i);
-		else if (is_quote(line[i]) == TRUE)
-		{
-			i += make_quote(&head, line, i);
-			if (line[i] == '\0')
-				return (head);
-			i++;
-		}
-		if (ft_isspace(line[i]) == TRUE)
-			i++;
-	}
-}
-
-int	parse_command(t_minishell *minishell, char *line)
-{
-	t_token	*tokens;
-
-	tokens = tokenize_line(line);
-
-	return (TRUE);
-}
-
 int main(int argc, char **argv, char **envp)
 {
     t_minishell *minishell;
@@ -52,7 +19,18 @@ int main(int argc, char **argv, char **envp)
             add_history(line);
             if (parse_command(minishell, line))
             {
-                
+                int i = 0;
+				while (minishell->tokens)
+				{
+					printf("token %d: %s\n", i, minishell->tokens->token);
+					i++;
+					minishell->tokens = minishell->tokens->next;
+				}
+
+
+
+
+
             }
             else
                 minishell->exit_status = 1;
