@@ -74,7 +74,7 @@ typedef struct s_command
 	int							here_doc;
 	char						*here_doc_delimiter;
 	char						**here_document_lines;
-	int							background_execution;
+	struct s_command			*next;
 }								t_command;
 /*
 cmd: A string to store the command name.

@@ -35,11 +35,11 @@ t_command   *init_command(void)
     command->cmd_args = NULL;
     command->input_redirection = NULL;
     command->output_redirection = NULL;
-    command->append_mode = 0;
-    command->here_doc = 0;
+    command->append_mode = FALSE;
+    command->here_doc = FALSE;
     command->here_doc_delimiter = NULL;
     command->here_document_lines = NULL;
-    command->background_execution = 0;
+    command->background_execution = FALSE;
     return (command);
 }
 

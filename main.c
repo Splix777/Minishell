@@ -1,5 +1,25 @@
 #include "./include/minishell.h"
 
+char	**tokenize_line(t_minishell *minishell, char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+
+	}
+}
+
+int	parse_command(t_minishell *minishell, char *line)
+{
+	char	**tokens;
+
+	tokens = tokenize_line(minishell, line);
+
+	return (TRUE);
+}
+
 int main(int argc, char **argv, char **envp)
 {
     t_minishell *minishell;
