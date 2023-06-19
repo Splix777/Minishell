@@ -27,6 +27,7 @@ int main(int argc, char **argv, char **envp)
                 // ft_env(minishell);
                 // ft_pwd(minishell);
                 // ft_exit(minishell);
+                // ft_echo(minishell);
 
             }
             else
@@ -38,9 +39,7 @@ int main(int argc, char **argv, char **envp)
         minishell->prompt = display_prompt(minishell);
         minishell->line = readline(minishell->prompt);
     }
-    free(minishell->prompt);
-    free(minishell->line);
-    free_structs(minishell);
+    ft_exit(minishell);
 }
 
         // Read user input

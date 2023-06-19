@@ -26,9 +26,26 @@ t_token	*tokenize_line(char *line)
     return (head);
 }
 
+static void print_tokens(t_token *tokens)
+{
+	t_token *tmp;
+
+	tmp = tokens;
+	while (tmp)
+	{
+		printf("token: [%s]\n", tmp->token);
+		if (tmp->type == 0)
+			printf("type: [%s]\n", "QUOTE");
+		else if (tmp->type == 1)
+			printf("type: [%s]\n", "SYMBOL");
+		else if (tmp->type == 2)
+			printf("type: [%s]\n", "COMMAND");
+		tmp = tmp->next;
+	}
+}
 int	parse_command(t_minishell *minishell, char *line)
 {
 	minishell->tokens = tokenize_line(line);
-
+	print_tokens(minishell->tokens);
 	return (TRUE);
 }
