@@ -52,6 +52,20 @@ char    *find_env_var(t_minishell *minishell, char *var)
     return (NULL);
 }
 
+t_env   *find_env_var_node(t_minishell *minishell, char *var)
+{
+    t_env   *env;
+
+    env = minishell->env;
+    while (env)
+    {
+        if (ft_strncmp(env->name, var, ft_strlen(var)) == 0)
+            return (env);
+        env = env->next;
+    }
+    return (NULL);
+}
+
 char    *display_prompt(t_minishell *minishell)
 {
     char    *prompt;
@@ -63,7 +77,7 @@ char    *display_prompt(t_minishell *minishell)
     total_len += ft_strlen(COLOR_BLUE);
     total_len += ft_strlen(COLOR_GREEN);
     total_len += ft_strlen(RESET);
-    total_len += ft_strlen("@minishell: ");
+    total_len += ft_strlen("@minishell: "); 
     total_len += ft_strlen("$ ");
     user = find_env_var(minishell, "USER");
     if (!user)

@@ -21,3 +21,26 @@ void    add_token(t_token **head, char *content, int type)
         last->next = new;
     }
 }
+
+void ft_tokenclear(t_token **lst)
+{
+    t_token *cleanlst;
+    t_token *temp;
+
+    cleanlst = *lst;
+    while (cleanlst)
+    {
+        temp = cleanlst->next;
+        ft_tokendelone(cleanlst);
+        cleanlst = temp;
+    }
+    *lst = NULL;
+}
+
+void ft_tokendelone(t_token *lst)
+{
+    if (!lst)
+        return ;
+    free(lst->token);
+    free(lst);
+}

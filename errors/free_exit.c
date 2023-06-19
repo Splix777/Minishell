@@ -8,7 +8,7 @@ void    free_structs(t_minishell *minishell)
     if (minishell->command != NULL)
         free(minishell->command);
     if (minishell->tokens != NULL)
-        free(minishell->tokens);
+        ft_tokenclear(&minishell->tokens);
     if (minishell->process != NULL)
         free(minishell->process);
     if (minishell->builtins != NULL)
@@ -16,7 +16,8 @@ void    free_structs(t_minishell *minishell)
     if (minishell->env != NULL)
         ft_envclear(&minishell->env);
     free(minishell);
-    exit(exit_status);
+    system("leaks minishell");
+    exit(0);
 }
 
 int line_empty(char *line)

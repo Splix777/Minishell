@@ -11,9 +11,6 @@ t_minishell *init_structs(char** envp)
     minishell->command = init_command();
     if (minishell->command == NULL)
         free_structs(minishell);
-    minishell->tokens = init_tokens();
-    if (minishell->tokens == NULL)
-        free_structs(minishell);
     minishell->process = init_process();
     if (minishell->process == NULL)
         free_structs(minishell);
@@ -40,18 +37,6 @@ t_command   *init_command(void)
     command->here_doc_delimiter = NULL;
     command->here_document_lines = NULL;
     return (command);
-}
-
-t_token   *init_tokens(void)
-{
-    t_token *token;
-    
-    token = malloc(sizeof(t_token));
-    if (!token) 
-        return (NULL);
-    token->token = NULL;
-    token->type = 0;
-    return (token);
 }
 
 t_process *init_process(void)

@@ -1,47 +1,45 @@
 #include "./include/minishell.h"
 
+void valgrind(void)
+{
+    system("leaks minishell");
+}
+
 int main(int argc, char **argv, char **envp)
 {
     t_minishell *minishell;
-    char        *line;
-    char        *prompt;
     (void)      argc;
     (void)      argv;
 
+    atexit(valgrind);
     minishell = init_structs(envp);
-    prompt = display_prompt(minishell);
-    line = readline(prompt);
-    while (line)
+    minishell->prompt = display_prompt(minishell);
+    minishell->line = readline(minishell->prompt);
+    while (minishell->line)
     {
         listen_signals();
-        if (line_empty(line) == FALSE)
+        if (line_empty(minishell->line) == FALSE)
         {
-            add_history(line);
-            if (parse_command(minishell, line))
+            add_history(minishell->line);
+            if (parse_command(minishell, minishell->line))
             {
-                int i = 0;
-				while (minishell->tokens)
-				{
-					printf("token %d: %s\n", i, minishell->tokens->token);
-					i++;
-					minishell->tokens = minishell->tokens->next;
-				}
-
-
-
-
+                // ft_cd(minishell);
+                // ft_env(minishell);
+                // ft_pwd(minishell);
+                // ft_exit(minishell);
 
             }
             else
                 minishell->exit_status = 1;
         }
-        free(line);
-        free(prompt);
-        prompt = display_prompt(minishell);
-        line = readline(prompt);
+        ft_tokenclear(&minishell->tokens);
+        free(minishell->line);
+        free(minishell->prompt);
+        minishell->prompt = display_prompt(minishell);
+        minishell->line = readline(minishell->prompt);
     }
-    free(prompt);
-    free(line);
+    free(minishell->prompt);
+    free(minishell->line);
     free_structs(minishell);
 }
 
