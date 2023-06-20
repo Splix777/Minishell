@@ -21,13 +21,16 @@ int main(int argc, char **argv, char **envp)
         if (line_empty(minishell->line) == FALSE)
         {
             add_history(minishell->line);
-            if (parse_command(minishell, minishell->line))
+            if (parse_command(minishell) == TRUE)
             {
+
                 // ft_cd(minishell);
                 // ft_env(minishell);
                 // ft_pwd(minishell);
                 // ft_exit(minishell);
                 // ft_echo(minishell);
+                // ft_export(minishell);
+                // ft_unset(minishell);
 
             }
             else
@@ -42,8 +45,6 @@ int main(int argc, char **argv, char **envp)
     ft_exit(minishell);
 }
 
-        // Read user input
-        
         // Parse the input and construct the command structure
         
         // Handle built-in commands separately

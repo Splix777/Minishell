@@ -35,17 +35,22 @@ static void print_tokens(t_token *tokens)
 	{
 		printf("token: [%s]\n", tmp->token);
 		if (tmp->type == 0)
-			printf("type: [%s]\n", "QUOTE");
+			printf("type: [%s]\n", "SQUOTE");
 		else if (tmp->type == 1)
-			printf("type: [%s]\n", "SYMBOL");
+			printf("type: [%s]\n", "DQUOTE");
 		else if (tmp->type == 2)
+			printf("type: [%s]\n", "SYMBOL");
+		else if (tmp->type == 3)
 			printf("type: [%s]\n", "COMMAND");
 		tmp = tmp->next;
 	}
 }
-int	parse_command(t_minishell *minishell, char *line)
+int	parse_command(t_minishell *minishell)
 {
-	minishell->tokens = tokenize_line(line);
+	minishell->tokens = tokenize_line(minishell->line);
+
+
+
 	print_tokens(minishell->tokens);
 	return (TRUE);
 }

@@ -42,7 +42,10 @@ int make_quote(t_token **head, char *line, int i)
             j++;
         if (line[i + j] == line[i])
             j++;
-        add_token(head, ft_substr(line, i, j), QUOTE);
+        if (line[i] == '\"')
+            add_token(head, ft_substr(line, i, j), DQUOTE);
+        else if (line[i] == '\'')
+            add_token(head, ft_substr(line, i, j), SQUOTE);
     }
     return (j);
 }
@@ -56,7 +59,7 @@ int is_quote(char c)
 
 int is_special_character(char c)
 {
-    if (c == '|' || c == '\'' || c == '<' || c == '>' || c == '\"')
+    if (c == '|' || c == '<' || c == '>' || c == '\'' || c == '\"')
         return (TRUE);
     return (FALSE);
 }

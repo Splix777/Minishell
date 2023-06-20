@@ -49,3 +49,20 @@ void ft_envdelone(t_env *lst)
     free(lst->value);
     free(lst);
 }
+
+void ft_remove_env_node(t_env *lst, t_env *node)
+{
+    t_env *tmp;
+
+    tmp = lst;
+    while (tmp)
+    {
+        if (tmp->next == node)
+        {
+            tmp->next = node->next;
+            ft_envdelone(node);
+            return ;
+        }
+        tmp = tmp->next;
+    }
+}

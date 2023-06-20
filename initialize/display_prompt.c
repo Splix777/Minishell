@@ -86,6 +86,9 @@ char    *display_prompt(t_minishell *minishell)
         pwd[0] = '\0';
     total_len += ft_strlen(user);
     total_len += ft_strlen(pwd);
-    prompt = multi_strjoin(total_len, 8, COLOR_BLUE, user, "@minishell: ", COLOR_GREEN, pwd, "$ ", RESET, "\0");
+    if (minishell->exit_status == 0)
+        prompt = multi_strjoin(total_len, 8, COLOR_BLUE, user, "@minishell: ", COLOR_GREEN, pwd, "$ ", RESET, "\0");
+    else
+        prompt = multi_strjoin(total_len, 8, COLOR_BLUE, user, "@minishell: ", COLOR_RED, pwd, "$ ", RESET, "\0");
     return (prompt);
 }

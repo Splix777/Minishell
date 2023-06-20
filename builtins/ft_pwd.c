@@ -17,5 +17,6 @@ void    ft_pwd(t_minishell *minishel)
         ft_putstr_fd(pwd, 1);
         ft_putstr_fd("\n", 1);
         free(pwd);
+        minishel->exit_status = 0;
     }
 }

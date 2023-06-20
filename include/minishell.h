@@ -47,9 +47,10 @@
 # define READ_END 0
 # define WRITE_END 1
 // Parsing
-# define QUOTE 0
-# define SYMBOL 1
-# define COMMAND 2
+# define SQUOTE 0
+# define DQUOTE 1
+# define SYMBOL 2
+# define COMMAND 3
 // Colors
 # define RESET "\033[0m"
 # define COLOR_GREEN "\033[0;32m"
@@ -101,78 +102,80 @@ typedef struct s_process
 	struct s_process			*next;
 }								t_process;
 
-typedef struct	s_builtins
+typedef struct s_builtins
 {
-	char	*cmd[7];
-	void	(*func[7])(t_minishell*);
+	char						*cmd[7];
+	void						(*func[7])(t_minishell *);
 
-}				t_builtins;
+}								t_builtins;
 
 typedef struct s_minishell
 {
-	int				exit_status;
-	char			*line;
-	char			*prompt;
-	t_builtins		*builtins;	// Structure for builtin cmds
-	t_command		*command; 	// Structure for command-related data
-	t_token			*tokens; 	// Structure for command history data
-	t_env			*env;		// Structure for environment variables data
-	t_process		*process;	// Structure for signal handling data
+	int							exit_status;
+	char						*line;
+	char						*prompt;
+	t_builtins *builtins; // Structure for builtin cmds
+	t_command *command;   // Structure for command-related data
+	t_token *tokens;      // Structure for command history data
+	t_env *env;           // Structure for environment variables data
+	t_process *process;   // Structure for signal handling data
 }								t_minishell;
 
 // errors/checks_exits.c
-void	free_structs(t_minishell *minishell);
-int		line_empty(char *line);
+void							free_structs(t_minishell *minishell);
+int								line_empty(char *line);
 // initialize/init_structs.c
-t_minishell	*init_structs(char **envp);
-t_env		*init_env(char **envp);
-t_command	*init_command(void);
-t_builtins	*init_builtins(void);
-t_process	*init_process(void);
+t_minishell						*init_structs(char **envp);
+t_env							*init_env(char **envp);
+t_command						*init_command(void);
+t_builtins						*init_builtins(void);
+t_process						*init_process(void);
 // initialize/env_lst_utils.c
-void	add_env(t_env **head, t_env *env);
-void	ft_envclear(t_env **lst);
-void	ft_envdelone(t_env *lst);
-t_env	*ft_envlast(t_env *lst);
+void							add_env(t_env **head, t_env *env);
+void							ft_envclear(t_env **lst);
+void							ft_envdelone(t_env *lst);
+void							ft_remove_env_node(t_env *lst, t_env *node);
+t_env							*ft_envlast(t_env *lst);
 // initialize/display_prompt.c
-char	*ft_strcat(char *dest, const char *src);
-char	*multi_strjoin(int total_len, int count, ...);
-char    *find_env_var(t_minishell *minishell, char *var);
-t_env   *find_env_var_node(t_minishell *minishell, char *var);
-char	*display_prompt(t_minishell *minishell);
+char							*ft_strcat(char *dest, const char *src);
+char							*multi_strjoin(int total_len, int count, ...);
+char							*find_env_var(t_minishell *minishell,
+									char *var);
+char							*display_prompt(t_minishell *minishell);
+t_env							*find_env_var_node(t_minishell *minishell,
+									char *var);
 // signals/signals.c
-void    sigint_handler(int sig);
-void    sigquit_handler(int sig);
-void    listen_signals(void);
+void							sigint_handler(int sig);
+void							sigquit_handler(int sig);
+void							listen_signals(void);
 // lexer/lexer.c
-int		parse_command(t_minishell *minishell, char *line);
-t_token	*tokenize_line(char *line);
+int								parse_command(t_minishell *minishell);
+t_token							*tokenize_line(char *line);
 // lexer/lexer_utils.c
-int make_command(t_token **head, char *line, int i);
-int make_symbol(t_token **head, char *line, int i);
-int make_quote(t_token **head, char *line, int i);
-int is_quote(char c);
-int is_special_character(char c);
+int								make_command(t_token **head, char *line, int i);
+int								make_symbol(t_token **head, char *line, int i);
+int								make_quote(t_token **head, char *line, int i);
+int								is_quote(char c);
+int								is_special_character(char c);
 // lexer/lexer_lst_utils.c
-void    add_token(t_token **head, char *content, int type);
-void ft_tokenclear(t_token **lst);
-void ft_tokendelone(t_token *lst);
+void							add_token(t_token **head, char *content,
+									int type);
+void							ft_tokenclear(t_token **lst);
+void							ft_tokendelone(t_token *lst);
 // builtins/ft_cd.c
-void	ft_cd(t_minishell *minishell);
-
+void							ft_cd(t_minishell *minishell);
 
 // builtins/ft_echo.c
-void	ft_echo(t_minishell *minishell);
+void							ft_echo(t_minishell *minishell);
 // builtins/ft_pwd.c
-void	ft_pwd(t_minishell *minishell);
+void							ft_pwd(t_minishell *minishell);
 // builtins/ft_export.c
-void	ft_export(t_minishell *minishell);
+void							ft_export(t_minishell *minishell);
 // builtins/ft_unset.c
-void	ft_unset(t_minishell *minishell);
+void							ft_unset(t_minishell *minishell);
 // builtins/ft_env.c
-void	ft_env(t_minishell *minishell);
+void							ft_env(t_minishell *minishell);
 // builtins/ft_exit.c
-void	ft_exit(t_minishell *minishell);
-
+void							ft_exit(t_minishell *minishell);
 
 #endif
