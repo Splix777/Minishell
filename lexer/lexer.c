@@ -45,12 +45,10 @@ static void print_tokens(t_token *tokens)
 		tmp = tmp->next;
 	}
 }
+
 int	parse_command(t_minishell *minishell)
 {
 	minishell->tokens = tokenize_line(minishell->line);
-
-
-
 	print_tokens(minishell->tokens);
-	return (TRUE);
+	return (parse_errors(minishell));
 }

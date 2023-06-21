@@ -23,7 +23,7 @@ int main(int argc, char **argv, char **envp)
             add_history(minishell->line);
             if (parse_command(minishell) == TRUE)
             {
-
+                build_command_structs(minishell);
                 // ft_cd(minishell);
                 // ft_env(minishell);
                 // ft_pwd(minishell);
@@ -33,8 +33,6 @@ int main(int argc, char **argv, char **envp)
                 // ft_unset(minishell);
 
             }
-            else
-                minishell->exit_status = 1;
         }
         ft_tokenclear(&minishell->tokens);
         free(minishell->line);

@@ -25,6 +25,7 @@ SRCS = main.c \
 	   lexer/lexer.c \
 	   lexer/lexer_utils.c \
 	   lexer/lexer_lst_utils.c \
+	   lexer/lexer_errors.c
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

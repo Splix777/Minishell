@@ -16,8 +16,7 @@ void    free_structs(t_minishell *minishell)
     if (minishell->env != NULL)
         ft_envclear(&minishell->env);
     free(minishell);
-    system("leaks minishell");
-    exit(0);
+    exit(exit_status);
 }
 
 int line_empty(char *line)

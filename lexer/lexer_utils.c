@@ -18,13 +18,11 @@ int make_symbol(t_token **head, char *line, int i)
 {
     int j;
 
-    j = 0;
+    j = 1;
     if (is_special_character(line[i]) == TRUE)
     {
-        while (is_special_character(line[i + j]) == TRUE && line[i + j])
-        {
+        if (is_special_character(line[i + j]) == TRUE && line[i + j] == line[i])
             j++;
-        }
         add_token(head, ft_substr(line, i, j), SYMBOL);
     }
     return (j);

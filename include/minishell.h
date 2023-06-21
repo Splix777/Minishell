@@ -51,6 +51,8 @@
 # define DQUOTE 1
 # define SYMBOL 2
 # define COMMAND 3
+# define PIPE 4
+# define REDIRECT 5
 // Colors
 # define RESET "\033[0m"
 # define COLOR_GREEN "\033[0;32m"
@@ -162,6 +164,11 @@ void							add_token(t_token **head, char *content,
 									int type);
 void							ft_tokenclear(t_token **lst);
 void							ft_tokendelone(t_token *lst);
+// lexer/lexer_errors.c
+int								token_error(t_minishell *minishell, char *token, int type);
+int 							symbol_type(t_token *token);
+int								parse_errors(t_minishell *minishell);
+
 // builtins/ft_cd.c
 void							ft_cd(t_minishell *minishell);
 
