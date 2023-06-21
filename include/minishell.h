@@ -78,7 +78,6 @@ typedef struct s_command
 	int							append_mode;
 	int							here_doc;
 	char						*here_doc_delimiter;
-	char						**here_document_lines;
 	struct s_command			*next;
 }								t_command;
 

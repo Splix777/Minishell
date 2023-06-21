@@ -35,7 +35,6 @@ t_command   *init_command(void)
     command->append_mode = FALSE;
     command->here_doc = FALSE;
     command->here_doc_delimiter = NULL;
-    command->here_document_lines = NULL;
     return (command);
 }
 

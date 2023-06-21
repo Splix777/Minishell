@@ -23,7 +23,7 @@ int main(int argc, char **argv, char **envp)
             add_history(minishell->line);
             if (parse_command(minishell) == TRUE)
             {
-                build_command_structs(minishell);
+                // build_command_structs(minishell);
                 // ft_cd(minishell);
                 // ft_env(minishell);
                 // ft_pwd(minishell);

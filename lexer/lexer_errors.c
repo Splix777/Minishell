@@ -30,15 +30,18 @@ int	parse_errors(t_minishell *minishell)
 	tmp = minishell->tokens;
     if (tmp->type == SYMBOL && symbol_type(tmp) == PIPE)
         return (token_error(minishell, tmp->token, PIPE));
-	while (tmp)
-	{
-        if (tmp->type == SYMBOL && tmp->next == NULL && symbol_type(tmp) == PIPE)
-            return (token_error(minishell, tmp->token, PIPE));
-        if (tmp->type == SYMBOL && tmp->next == NULL && symbol_type(tmp) == REDIRECT)
-            return (token_error(minishell, tmp->token, REDIRECT));
-        if (tmp->type == SYMBOL && tmp->next && tmp->next->type == SYMBOL)
-            return (token_error(minishell, tmp->next->token, SYMBOL));
-        tmp = tmp->next;
-	}
+    else
+    {
+	    while (tmp)
+        {
+            if (tmp->type == SYMBOL && tmp->next == NULL && symbol_type(tmp) == PIPE)
+                return (token_error(minishell, tmp->token, PIPE));
+            if (tmp->type == SYMBOL && tmp->next == NULL && symbol_type(tmp) == REDIRECT)
+                return (token_error(minishell, tmp->token, REDIRECT));
+            if (tmp->type == SYMBOL && tmp->next && tmp->next->type == SYMBOL)
+                return (token_error(minishell, tmp->next->token, SYMBOL));
+            tmp = tmp->next;
+        }
+    }
     return (TRUE);
 }
