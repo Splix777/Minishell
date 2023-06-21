@@ -22,7 +22,8 @@ t_minishell *init_structs(char** envp)
 }
 
 t_command   *init_command(void)
-{
+{   
+    t_command   *head;
     t_command   *command;
 
     command = malloc(sizeof(t_command));

@@ -1,8 +1,7 @@
 #include "../include/minishell.h"
 
-t_token handle_symbol(t_minishell *minishell, t_command *command)
+t_token handle_symbol(t_minishell *minishell, t_token *token)
 {
-    t_token *token;
     char    *symbol[];
     char    *symbol_type[];
     int     i;
@@ -19,28 +18,37 @@ t_token handle_symbol(t_minishell *minishell, t_command *command)
         {
             token->type = symbol_type[i];
             if (i == 0)
-                token = handle_pipe(minishell, command);
+                token = handle_pipe(minishell, token);
             else if (i == 1 || i == 2 || i == 3)
-                token = handle_redirection(minishell, command, i);
+                token = handle_redirection(minishell, token, i);
             else if (i == 4)
-                token = do_here_doc(minishell, command);
+                token = do_here_doc(minishell, token);
         }
     }
     return (token);
 }
 
+t_token *handle_pipe(t_minishell *minishell, t_token *token)
+{ 
+}
+
+t_token *do_here_doc(t_minishell *minishell, t_token *token)
+{
+    minishell->command->here_doc = TRUE;
+    minishell->command->here_doc_delimiter = ft_strdup(token->next->token);
+    token = token->next->next;
+}
+
 void    build_command_structs(t_minishell *minishell)
 {
     t_token     *token;
-    t_command   *command;
 
     token = minishell->tokens;
-    command = NULL;
     while (token)
     {
         if (token->type == SYMBOL)
-            token = handle_symbol(minishell, command);
+            token = handle_symbol(minishell, token);
         while (token->type == COMMAND || token->type == DQUOTE || token->type == SQUOTE)
-            token = handle_command(minishell);
+            token = handle_command(minishell, token);
     }
 }
