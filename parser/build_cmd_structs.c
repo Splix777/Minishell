@@ -23,7 +23,7 @@ t_token handle_symbol(t_minishell *minishell, t_command *command)
             else if (i == 1 || i == 2 || i == 3)
                 token = handle_redirection(minishell, command, i);
             else if (i == 4)
-                token = handle_here_doc(minishell, command);
+                token = do_here_doc(minishell, command);
         }
     }
     return (token);
