@@ -17,13 +17,8 @@ char    *expand_token(t_minishell *minishell, char *token)
     int     j;
 
     i = 0;
-    if (!ft_strchr(token, '$'))
-        return (token);
-    if (!ft_strcmp(token, "$"))
-    {
-        free(token);
-        return (ft_strdup(""));
-    } 
+    if (!ft_strchr(token, '$') || !ft_strncmp(token, "$", 2))
+		return (token);
     expanded_token = ft_strdup("");
     while (token[i])
     {
@@ -33,10 +28,10 @@ char    *expand_token(t_minishell *minishell, char *token)
             expanded_token = ft_strjoin_free(expanded_token, ft_itoa(minishell->exit_status));
             i += 2;
         }
-        else if (token[i] == '$')
+        else if (token[i] == '$' && (ft_isalpha(token[i + 1]) || token[i + 1] == '_'))
         {
             i++;
-            while (token[i + j] && ft_isalnum(token[i + j]))
+            while (token[i + j] && (ft_isalpha(token[i + 1]) || token[i + 1] == '_'))
                 j++;
             temp = ft_substr(token, i, j);
             expanded_token = ft_strjoin_free(expanded_token, find_env_var(minishell, temp));

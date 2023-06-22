@@ -176,6 +176,9 @@ void							ft_cmdclear(t_command **lst);
 void							ft_cmddelone(t_command *lst);
 void							ft_remove_cmd_node(t_command *lst, t_command *node);
 t_command						*ft_cmdlast(t_command *lst);
+// expander/expander.c
+char							*expand_token(t_minishell *minishell, char *token);
+char							*ft_strjoin_free(char *s1, char *s2);
 // builtins/ft_cd.c
 void							ft_cd(t_minishell *minishell);
 // builtins/ft_echo.c
@@ -193,7 +196,4 @@ void							ft_exit(t_minishell *minishell);
 // utils/general_utils.c
 void							ft_free_array(char **array);
 int								line_empty(char *line);
-// expander/expander.c
-char							*expand_token(t_minishell *minishell, char *token);
-char							*ft_strjoin_free(char *s1, char *s2);
 #endif
