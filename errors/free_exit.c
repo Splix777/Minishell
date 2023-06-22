@@ -6,7 +6,7 @@ void    free_structs(t_minishell *minishell)
 
     exit_status = minishell->exit_status;
     if (minishell->command != NULL)
-        free(minishell->command);
+        ft_cmdclear(&minishell->command);
     if (minishell->tokens != NULL)
         ft_tokenclear(&minishell->tokens);
     if (minishell->process != NULL)
@@ -17,20 +17,4 @@ void    free_structs(t_minishell *minishell)
         ft_envclear(&minishell->env);
     free(minishell);
     exit(exit_status);
-}
-
-int line_empty(char *line)
-{
-    int i;
-
-    i = 0;
-    if (!line)
-        return (TRUE);
-    while (line[i])
-    {
-        if (line[i] != 32 && (line[i] < 9 || line[i] > 13))
-            return (FALSE);
-        i++;
-    }
-    return (TRUE);
 }

@@ -6,7 +6,7 @@ void    ft_exit(t_minishell *minishell)
 
     exit_status = minishell->exit_status;
     if (minishell->command != NULL)
-        free(minishell->command);
+        ft_cmdclear(&minishell->command);
     if (minishell->tokens != NULL)
         ft_tokenclear(&minishell->tokens);
     if (minishell->process != NULL)

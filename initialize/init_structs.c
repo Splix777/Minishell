@@ -8,15 +8,13 @@ t_minishell *init_structs(char** envp)
     if (!minishell)
         return (NULL);
     memset(minishell, 0, sizeof(t_minishell));
-    minishell->command = init_command();
-    if (minishell->command == NULL)
-        free_structs(minishell);
     minishell->process = init_process();
     if (minishell->process == NULL)
         free_structs(minishell);
     minishell->builtins = init_builtins();
     if (minishell->builtins == NULL)
         free_structs(minishell);
+    minishell->command = init_command();
     minishell->env = init_env(envp);
     return (minishell);
 }
@@ -24,19 +22,9 @@ t_minishell *init_structs(char** envp)
 t_command   *init_command(void)
 {   
     t_command   *head;
-    t_command   *command;
 
-    command = malloc(sizeof(t_command));
-    if (!command)
-        return (NULL);
-    command->cmd = NULL;
-    command->cmd_args = NULL;
-    command->input_redirection = NULL;
-    command->output_redirection = NULL;
-    command->append_mode = FALSE;
-    command->here_doc = FALSE;
-    command->here_doc_delimiter = NULL;
-    return (command);
+    head = NULL;
+    return (head);
 }
 
 t_process *init_process(void)
@@ -71,7 +59,7 @@ t_env  *init_env(char **envp)
             ft_envclear(&head);
             return (NULL);
         }
-        env->name = ft_substr(envp[i], 0, (ft_strchr(envp[i], '=') - envp[i]) + 1);
+        env->name = ft_substr(envp[i], 0, (ft_strchr(envp[i], '=') - envp[i]));
         env->value = ft_strdup(ft_strchr(envp[i], '=') + 1);
         env->next = NULL;
         add_env(&head, env);

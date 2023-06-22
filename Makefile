@@ -25,7 +25,11 @@ SRCS = main.c \
 	   lexer/lexer.c \
 	   lexer/lexer_utils.c \
 	   lexer/lexer_lst_utils.c \
-	   lexer/lexer_errors.c
+	   lexer/lexer_errors.c \
+	   parser/build_cmd_structs.c \
+	   parser/cmd_lst_utils.c \
+	   expander/expander.c \
+	   utils/general_utils.c \
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
 

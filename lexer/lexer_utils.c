@@ -1,36 +1,46 @@
 #include "../include/minishell.h"
 
-int make_command(t_token **head, char *line, int i)
+int make_command(t_minishell *minishell, t_token **head, char *line, int i)
 {
-    int j;
+    int     j;
+    char    *token;
+    char    *exp;
 
     j = 0;
     if (is_special_character(line[i]) == FALSE && ft_isspace(line[i]) == FALSE)
     {
         while (is_special_character(line[i + j]) == FALSE && line[i + j] && ft_isspace(line[i + j]) == FALSE)
             j++;
-        add_token(head, ft_substr(line, i, j), COMMAND);
+        token = ft_substr(line, i, j);
+        exp = expand_token(minishell, token);
+        add_token(head, exp, COMMAND);
     }
     return (j);
 }
 
-int make_symbol(t_token **head, char *line, int i)
+int make_symbol(t_minishell *minishell, t_token **head, char *line, int i)
 {
     int j;
+    char *token;
+    char *exp;
 
     j = 1;
     if (is_special_character(line[i]) == TRUE)
     {
         if (is_special_character(line[i + j]) == TRUE && line[i + j] == line[i])
             j++;
-        add_token(head, ft_substr(line, i, j), SYMBOL);
+        token = ft_substr(line, i, j);
+        exp = expand_token(minishell, token);
+        add_token(head, exp, SYMBOL);
     }
     return (j);
 }
 
-int make_quote(t_token **head, char *line, int i)
+int make_quote(t_minishell *minishell, t_token **head, char *line, int i)
 {
     int j;
+    char *token;
+    char *exp;
 
     j = 0;
     if (is_quote(line[i]) == TRUE)
@@ -41,7 +51,11 @@ int make_quote(t_token **head, char *line, int i)
         if (line[i + j] == line[i])
             j++;
         if (line[i] == '\"')
-            add_token(head, ft_substr(line, i, j), DQUOTE);
+        {
+            token = ft_substr(line, i, j);
+            exp = expand_token(minishell, token);
+            add_token(head, exp, DQUOTE);
+        }
         else if (line[i] == '\'')
             add_token(head, ft_substr(line, i, j), SQUOTE);
     }

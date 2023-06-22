@@ -124,7 +124,6 @@ typedef struct s_minishell
 
 // errors/checks_exits.c
 void							free_structs(t_minishell *minishell);
-int								line_empty(char *line);
 // initialize/init_structs.c
 t_minishell						*init_structs(char **envp);
 t_env							*init_env(char **envp);
@@ -151,11 +150,11 @@ void							sigquit_handler(int sig);
 void							listen_signals(void);
 // lexer/lexer.c
 int								parse_command(t_minishell *minishell);
-t_token							*tokenize_line(char *line);
+t_token							*tokenize_line(t_minishell *minishell, char *line);
 // lexer/lexer_utils.c
-int								make_command(t_token **head, char *line, int i);
-int								make_symbol(t_token **head, char *line, int i);
-int								make_quote(t_token **head, char *line, int i);
+int								make_command(t_minishell *minishell, t_token **head, char *line, int i);
+int								make_symbol(t_minishell *minishell, t_token **head, char *line, int i);
+int								make_quote(t_minishell *minishell, t_token **head, char *line, int i);
 int								is_quote(char c);
 int								is_special_character(char c);
 // lexer/lexer_lst_utils.c
@@ -168,9 +167,17 @@ int								token_error(t_minishell *minishell, char *token, int type);
 int 							symbol_type(t_token *token);
 int								parse_errors(t_minishell *minishell);
 
+
+// parser/build_cmd_struct.c
+
+// parser/cmd_lst_utils.c
+void							add_cmd(t_command **head, t_command *cmd);
+void							ft_cmdclear(t_command **lst);
+void							ft_cmddelone(t_command *lst);
+void							ft_remove_cmd_node(t_command *lst, t_command *node);
+t_command						*ft_cmdlast(t_command *lst);
 // builtins/ft_cd.c
 void							ft_cd(t_minishell *minishell);
-
 // builtins/ft_echo.c
 void							ft_echo(t_minishell *minishell);
 // builtins/ft_pwd.c
@@ -183,5 +190,10 @@ void							ft_unset(t_minishell *minishell);
 void							ft_env(t_minishell *minishell);
 // builtins/ft_exit.c
 void							ft_exit(t_minishell *minishell);
-
+// utils/general_utils.c
+void							ft_free_array(char **array);
+int								line_empty(char *line);
+// expander/expander.c
+char							*expand_token(t_minishell *minishell, char *token);
+char							*ft_strjoin_free(char *s1, char *s2);
 #endif
