@@ -9,7 +9,7 @@ t_token	*tokenize_line(t_minishell *minishell, char *line)
 	head = NULL;
 	while (line[i])
 	{
-		if (is_special_character(line[i]) == FALSE)
+		if (is_special_character(line[i]) == FALSE && !is_quote(line[i]))
 			i += make_command(minishell, &head, line, i);
 		else if (is_special_character(line[i]) == TRUE && is_quote(line[i]) == FALSE)
 			i += make_symbol(minishell, &head, line, i);

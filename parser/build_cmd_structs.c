@@ -10,5 +10,4 @@ void    build_command_structs(t_minishell *minishell)
     {
 
     }
-    (void) minishell;
 }

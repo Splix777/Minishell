@@ -1,5 +1,34 @@
 #include "../include/minishell.h"
 
+static char    *remove_quotes(char *token)
+{
+    int i;
+    int j;
+    char *new_token;
+
+    i = 0;
+    j = 0;
+    while (token[i + j])
+    {
+        if (token[i] == '\'' || token[i] == '\"')
+            i++;
+        j++;
+    }
+    new_token =  malloc(sizeof(char) * (j + 1));
+    i = -1;
+    j = 0;
+    while (token[++i])
+    {
+        while (token[i] == '\'' || token[i] == '\"')
+            i++;
+        new_token[j] = token[i];
+        j++;
+    }
+    new_token[i] = '\0';
+    free(token);
+    return (new_token);
+}
+
 int make_command(t_minishell *minishell, t_token **head, char *line, int i)
 {
     int     j;
@@ -12,11 +41,13 @@ int make_command(t_minishell *minishell, t_token **head, char *line, int i)
         while (is_special_character(line[i + j]) == FALSE && line[i + j] && ft_isspace(line[i + j]) == FALSE)
             j++;
         token = ft_substr(line, i, j);
+        token = remove_quotes(token);
         exp = expand_token(minishell, token);
         add_token(head, exp, COMMAND);
     }
     return (j);
 }
+
 
 int make_symbol(t_minishell *minishell, t_token **head, char *line, int i)
 {
@@ -49,17 +80,17 @@ int make_quote(t_minishell *minishell, t_token **head, char *line, int i)
         while (line[i + j] && line[i + j] != line[i])
             j++;
         if (line[i + j] == line[i])
-            j++;
+            j--;
         if (line[i] == '\"')
         {
-            token = ft_substr(line, i, j);
+            token = ft_substr(line, i + 1, j);
             exp = expand_token(minishell, token);
             add_token(head, exp, DQUOTE);
         }
         else if (line[i] == '\'')
-            add_token(head, ft_substr(line, i, j), SQUOTE);
+            add_token(head, ft_substr(line, i + 1, j), SQUOTE);
     }
-    return (j);
+    return (j + 1);
 }
 
 int is_quote(char c)
@@ -71,7 +102,7 @@ int is_quote(char c)
 
 int is_special_character(char c)
 {
-    if (c == '|' || c == '<' || c == '>' || c == '\'' || c == '\"')
+    if (c == '|' || c == '<' || c == '>')// || c == '\'' || c == '\"')
         return (TRUE);
     return (FALSE);
 }

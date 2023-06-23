@@ -47,9 +47,7 @@ void ft_cmddelone(t_command *lst)
         return ;
     free(lst->cmd);
     ft_free_array(lst->cmd_args);
-    free(lst->input_redirection);
-    free(lst->output_redirection);
-    free(lst->here_doc_delimiter);
+    // ft_redirclear(&lst->redir);
     free(lst);
 }
 

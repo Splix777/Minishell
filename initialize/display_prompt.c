@@ -45,7 +45,7 @@ char    *find_env_var(t_minishell *minishell, char *var)
     env = minishell->env;
     while (env)
     {
-        if (ft_strncmp(env->name, var, ft_strlen(var)) == 0)
+        if (ft_strcmp(env->name, var) == 0)
             return (env->value);
         env = env->next;
     }
