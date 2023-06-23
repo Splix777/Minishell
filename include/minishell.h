@@ -183,6 +183,12 @@ void						ft_cmdclear(t_command **lst);
 void						ft_cmddelone(t_command *lst);
 void						ft_remove_cmd_node(t_command *lst, t_command *node);
 t_command					*ft_cmdlast(t_command *lst);
+//  parser/redir_lst_utils.c
+void						add_redir(t_redir **head, t_redir *redir);
+t_redir						*ft_redir_last(t_redir *lst);
+void						ft_redirclear(t_redir **lst);
+void						ft_redirdelone(t_redir *lst);
+void						ft_remove_redir_node(t_redir *lst, t_redir *node);
 // expander/expander.c
 char						*expand_token(t_minishell *minishell, char *token);
 char						*ft_strjoin_free(char *s1, char *s2);
