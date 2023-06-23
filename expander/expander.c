@@ -31,7 +31,7 @@ char    *expand_token(t_minishell *minishell, char *token)
         else if (token[i] == '$' && (ft_isalpha(token[i + 1]) || token[i + 1] == '_'))
         {
             i++;
-            while (token[i + j] && (ft_isalpha(token[i + 1]) || token[i + 1] == '_'))
+            while (token[i + j] && (ft_isalnum(token[i + j]) || token[i + j] == '_'))
                 j++;
             temp = ft_substr(token, i, j);
             expanded_token = ft_strjoin_free(expanded_token, find_env_var(minishell, temp));
