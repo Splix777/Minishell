@@ -29,6 +29,22 @@ static char    *remove_quotes(char *token)
     return (new_token);
 }
 
+static void remove_spaces(t_minishell *minishell, t_token **head, char *exp)
+{
+    char    **temp;
+    int     i;
+
+    i = 0;
+    temp = ft_split(exp, ' ');
+    while (temp[i])
+    {
+        make_command(minishell, head, temp[i], 0);
+        i++;
+    }
+    ft_free_array(temp);
+    free(exp);
+}
+
 int make_command(t_minishell *minishell, t_token **head, char *line, int i)
 {
     int     j;
@@ -43,26 +59,35 @@ int make_command(t_minishell *minishell, t_token **head, char *line, int i)
         token = ft_substr(line, i, j);
         token = remove_quotes(token);
         exp = expand_token(minishell, token);
-        add_token(head, exp, COMMAND);
+        if (ft_strchr(exp, ' ') != NULL)
+            remove_spaces(minishell, head, exp);
+        else
+            add_token(head, exp, COMMAND);
     }
     return (j);
 }
-
 
 int make_symbol(t_minishell *minishell, t_token **head, char *line, int i)
 {
     int j;
     char *token;
-    char *exp;
+    //char *exp;
+    (void)minishell;
 
     j = 1;
     if (is_special_character(line[i]) == TRUE)
     {
-        if (is_special_character(line[i + j]) == TRUE && line[i + j] == line[i])
+        if (is_special_character(line[i + j]) == TRUE && line[i + j] == line[i] && line[i] != '|')
             j++;
         token = ft_substr(line, i, j);
-        exp = expand_token(minishell, token);
-        add_token(head, exp, SYMBOL);
+        // exp = expand_token(minishell, token);
+        if (line[i] == '|')
+            add_token(head, token, PIPE);
+        else if (line[i] == '<')
+            add_token(head, token, REDIRECT);
+        else if (line[i] == '>')
+            add_token(head, token, REDIRECT);
+        //add_token(head, exp, SYMBOL);
     }
     return (j);
 }
@@ -85,24 +110,11 @@ int make_quote(t_minishell *minishell, t_token **head, char *line, int i)
         {
             token = ft_substr(line, i + 1, j);
             exp = expand_token(minishell, token);
-            add_token(head, exp, DQUOTE);
+            add_token(head, exp, COMMAND);
         }
         else if (line[i] == '\'')
-            add_token(head, ft_substr(line, i + 1, j), SQUOTE);
+            add_token(head, ft_substr(line, i + 1, j), COMMAND);
     }
     return (j + 1);
 }
 
-int is_quote(char c)
-{
-    if (c == '\"' || c == '\'')
-        return (TRUE);
-    return (FALSE);
-}
-
-int is_special_character(char c)
-{
-    if (c == '|' || c == '<' || c == '>')// || c == '\'' || c == '\"')
-        return (TRUE);
-    return (FALSE);
-}

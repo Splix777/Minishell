@@ -53,6 +53,13 @@
 # define COMMAND 3
 # define PIPE 4
 # define REDIRECT 5
+# define REDIR_IN 6
+# define REDIR_OUT 7
+# define APPEND 8
+# define HEREDOC 9
+# define HEREDOC_DELIM 10
+# define COMMAND_ARG 11
+# define FILE 12
 // Colors
 # define RESET "\033[0m"
 # define COLOR_GREEN "\033[0;32m"
@@ -155,6 +162,8 @@ void						sigquit_handler(int sig);
 void						listen_signals(void);
 // lexer/lexer.c
 int							parse_command(t_minishell *minishell);
+void						print_tokens(t_token *tokens);
+void						type_redir(t_token *token);
 t_token						*tokenize_line(t_minishell *minishell, char *line);
 // lexer/lexer_utils.c
 int							make_command(t_minishell *minishell, t_token **head,
@@ -163,8 +172,6 @@ int							make_symbol(t_minishell *minishell, t_token **head,
 								char *line, int i);
 int							make_quote(t_minishell *minishell, t_token **head,
 								char *line, int i);
-int							is_quote(char c);
-int							is_special_character(char c);
 // lexer/lexer_lst_utils.c
 void						add_token(t_token **head, char *content, int type);
 void						ft_tokenclear(t_token **lst);
@@ -172,10 +179,12 @@ void						ft_tokendelone(t_token *lst);
 // lexer/lexer_errors.c
 int							token_error(t_minishell *minishell, char *token,
 								int type);
-int							symbol_type(t_token *token);
 int							parse_errors(t_minishell *minishell);
-
+int							is_quote(char c);
+int							is_special_character(char c);
 // parser/build_cmd_struct.c
+void						build_command_structs(t_minishell *minishell);
+
 
 // parser/cmd_lst_utils.c
 void						add_cmd(t_command **head, t_command *cmd);
@@ -185,13 +194,12 @@ void						ft_remove_cmd_node(t_command *lst, t_command *node);
 t_command					*ft_cmdlast(t_command *lst);
 //  parser/redir_lst_utils.c
 void						add_redir(t_redir **head, t_redir *redir);
-t_redir						*ft_redir_last(t_redir *lst);
 void						ft_redirclear(t_redir **lst);
 void						ft_redirdelone(t_redir *lst);
 void						ft_remove_redir_node(t_redir *lst, t_redir *node);
+t_redir						*ft_redir_last(t_redir *lst);
 // expander/expander.c
 char						*expand_token(t_minishell *minishell, char *token);
-char						*ft_strjoin_free(char *s1, char *s2);
 // builtins/ft_cd.c
 void						ft_cd(t_minishell *minishell);
 // builtins/ft_echo.c
@@ -208,5 +216,6 @@ void						ft_env(t_minishell *minishell);
 void						ft_exit(t_minishell *minishell);
 // utils/general_utils.c
 void						ft_free_array(char **array);
+char						*ft_strjoin_free(char *s1, char *s2);
 int							line_empty(char *line);
 #endif

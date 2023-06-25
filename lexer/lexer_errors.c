@@ -13,35 +13,41 @@ int token_error(t_minishell *minishell, char *token, int type)
     return (FALSE);
 }
 
-int symbol_type(t_token *token)
-{
-    if (token->token[0] == '|')
-        return (PIPE);
-    else if (token->token[0] == '<' || token->token[0] == '>')
-        return (REDIRECT);
-    else
-        return (FALSE);
-}
-
 int	parse_errors(t_minishell *minishell)
 {
 	t_token *tmp;
 
 	tmp = minishell->tokens;
-    if (tmp->type == SYMBOL && symbol_type(tmp) == PIPE)
+    if (tmp->type == PIPE)
         return (token_error(minishell, tmp->token, PIPE));
     else
     {
 	    while (tmp)
         {
-            if (tmp->type == SYMBOL && tmp->next == NULL && symbol_type(tmp) == PIPE)
+            if (tmp->type == PIPE && tmp->next == NULL)
                 return (token_error(minishell, tmp->token, PIPE));
-            if (tmp->type == SYMBOL && tmp->next == NULL && symbol_type(tmp) == REDIRECT)
+            if (tmp->type == REDIRECT && tmp->next == NULL)
                 return (token_error(minishell, tmp->token, REDIRECT));
-            if (tmp->type == SYMBOL && tmp->next && tmp->next->type == SYMBOL)
+            if (tmp->type == PIPE && tmp->next && tmp->next->type == PIPE)
+                return (token_error(minishell, tmp->next->token, SYMBOL));
+            if (tmp->type == REDIRECT && tmp->next && tmp->next->type == REDIRECT)
                 return (token_error(minishell, tmp->next->token, SYMBOL));
             tmp = tmp->next;
         }
     }
     return (TRUE);
+}
+
+int is_quote(char c)
+{
+    if (c == '\"' || c == '\'')
+        return (TRUE);
+    return (FALSE);
+}
+
+int is_special_character(char c)
+{
+    if (c == '|' || c == '<' || c == '>')// || c == '\'' || c == '\"')
+        return (TRUE);
+    return (FALSE);
 }
