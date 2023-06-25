@@ -14,17 +14,8 @@ t_minishell *init_structs(char** envp)
     minishell->builtins = init_builtins();
     if (minishell->builtins == NULL)
         free_structs(minishell);
-    minishell->command = init_command();
     minishell->env = init_env(envp);
     return (minishell);
-}
-
-t_command   *init_command(void)
-{   
-    t_command   *head;
-
-    head = NULL;
-    return (head);
 }
 
 t_process *init_process(void)

@@ -139,7 +139,6 @@ void						free_structs(t_minishell *minishell);
 // initialize/init_structs.c
 t_minishell					*init_structs(char **envp);
 t_env						*init_env(char **envp);
-t_command					*init_command(void);
 t_builtins					*init_builtins(void);
 t_process					*init_process(void);
 // initialize/env_lst_utils.c

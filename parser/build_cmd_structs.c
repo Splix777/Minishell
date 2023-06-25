@@ -58,7 +58,7 @@ void    build_command_structs(t_minishell *minishell)
             arg_count = count_args(tkn);
             cmd->cmd_args = malloc(sizeof(char *) * (arg_count + 1));
             i = 0;
-            while (i < arg_count)
+            while (tkn->type == COMMAND_ARG && tkn->next)
             {
                 cmd->cmd_args[arg_count] = ft_strdup(tkn->token);
                 i++;
@@ -84,8 +84,11 @@ void    build_command_structs(t_minishell *minishell)
         }
         if (tkn->next)
             tkn = tkn->next;
-        break ;
+        else
+        {
+            add_cmd(&minishell->command, cmd);
+            break ;
+        }
     }
-    printf("build_command_structs\n");
     print_cmd_token(minishell);
 }
