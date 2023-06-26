@@ -7,8 +7,8 @@ void valgrind(void)
 
 void reset_loop(t_minishell *minishell)
 {
-    ft_tokenclear(&minishell->tokens);
     ft_cmdclear(&minishell->command);
+    ft_tokenclear(&minishell->tokens);
     free(minishell->line);
     free(minishell->prompt);
     minishell->prompt = display_prompt(minishell);

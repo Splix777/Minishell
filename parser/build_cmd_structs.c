@@ -5,7 +5,7 @@ int count_args(t_token **tkn)
     int     count;
     t_token *tmp;
 
-    count = 0;
+    count = 1;
     tmp = *tkn;
     while (tmp->type == COMMAND_ARG && tmp->next)
     {
@@ -65,7 +65,7 @@ void    assign_args(t_command *cmd, t_token **tkn)
         else
             break ;
     }
-    cmd->cmd_args[i] = NULL;
+    cmd->cmd_args[arg_count] = NULL;
 }
 
 void    assing_redirs(t_command *cmd, t_token **tkn)

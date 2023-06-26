@@ -147,6 +147,7 @@ void						ft_envclear(t_env **lst);
 void						ft_envdelone(t_env *lst);
 void						ft_remove_env_node(t_env *lst, t_env *node);
 t_env						*ft_envlast(t_env *lst);
+void						ft_add_env_node(t_env **head, char *name, char *value);
 // initialize/display_prompt.c
 char						*ft_strcat(char *dest, const char *src);
 char						*multi_strjoin(int total_len, int count, ...);

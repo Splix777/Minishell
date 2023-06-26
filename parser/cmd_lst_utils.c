@@ -60,7 +60,8 @@ void ft_cmddelone(t_command *lst)
     if (!lst)
         return ;
     free(lst->cmd);
-    ft_free_array(lst->cmd_args);
+    if (lst->cmd_args)
+        ft_free_array(lst->cmd_args);
     ft_redirclear(&lst->redir);
     free(lst);
 }

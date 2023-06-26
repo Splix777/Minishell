@@ -66,3 +66,14 @@ void ft_remove_env_node(t_env *lst, t_env *node)
         tmp = tmp->next;
     }
 }
+
+void ft_add_env_node(t_env **head, char *name, char *value)
+{
+    t_env *node;
+
+    node = malloc(sizeof(t_env));
+    node->name = name;
+    node->value = value;
+    node->next = NULL;
+    add_env(head, node);
+}
