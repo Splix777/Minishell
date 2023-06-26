@@ -5,7 +5,7 @@ void    ft_echo(t_minishell *minishell)
     int i;
     int n;
 
-    i = 1;
+    i = 0;
     n = 0;
     if (minishell->command->cmd_args[i] && ft_strncmp(minishell->command->cmd_args[i], "-n", 2) == 0)
     {

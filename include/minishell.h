@@ -200,6 +200,9 @@ t_redir						*init_redir(void);
 t_redir						*ft_redir_last(t_redir *lst);
 // expander/expander.c
 char						*expand_token(t_minishell *minishell, char *token);
+// executor/executor.c
+void						executor(t_minishell *minishell);
+
 // builtins/ft_cd.c
 void						ft_cd(t_minishell *minishell);
 // builtins/ft_echo.c

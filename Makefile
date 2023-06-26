@@ -30,6 +30,7 @@ SRCS = main.c \
 	   parser/cmd_lst_utils.c \
 	   parser/redir_lst_utils.c \
 	   expander/expander.c \
+	   executor/executor.c \
 	   utils/general_utils.c \
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)

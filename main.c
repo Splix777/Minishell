@@ -5,6 +5,16 @@ void valgrind(void)
     system("leaks minishell");
 }
 
+void reset_loop(t_minishell *minishell)
+{
+    ft_tokenclear(&minishell->tokens);
+    ft_cmdclear(&minishell->command);
+    free(minishell->line);
+    free(minishell->prompt);
+    minishell->prompt = display_prompt(minishell);
+    minishell->line = readline(minishell->prompt);
+}
+
 int main(int argc, char **argv, char **envp)
 {
     t_minishell *minishell;
@@ -24,35 +34,16 @@ int main(int argc, char **argv, char **envp)
             if (parse_command(minishell) == TRUE)
             {
                 build_command_structs(minishell);
-                // ft_cd(minishell);
-                // ft_env(minishell);
-                // ft_pwd(minishell);
-                // ft_exit(minishell);
-                // ft_echo(minishell);
-                // ft_export(minishell);
-                // ft_unset(minishell);
-
+                executor(minishell);
             }
         }
-        ft_tokenclear(&minishell->tokens);
-        ft_cmdclear(&minishell->command);
-        free(minishell->line);
-        free(minishell->prompt);
-
-        minishell->prompt = display_prompt(minishell);
-        minishell->line = readline(minishell->prompt);
+        reset_loop(minishell);
     }
     rl_clear_history();
     ft_exit(minishell);
-}
-
-        // Parse the input and construct the command structure
-        
+}       
         // Handle built-in commands separately
         
         // If not a built-in command, search and launch the executable
-        
-        // Cleanup any dynamically allocated memory or resources
-        
-        // Display the prompt for the next command
+
     

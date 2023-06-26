@@ -21,7 +21,6 @@ static void    print_cmd_token(t_minishell *minishell)
     t_redir     *redir;
     int         i;
 
-    
     cmd = minishell->command;
     while (cmd)
     {

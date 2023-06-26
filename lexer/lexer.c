@@ -110,7 +110,7 @@ int	parse_command(t_minishell *minishell)
 	minishell->tokens = tokenize_line(minishell, minishell->line);
 	if (parse_errors(minishell) == FALSE)
 		return (FALSE);
+	print_tokens(minishell->tokens);
 	label_tokens(minishell->tokens);
 	return (TRUE);
-	print_tokens(minishell->tokens);
 }
