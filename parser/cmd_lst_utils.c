@@ -1,5 +1,19 @@
 #include "../include/minishell.h"
 
+t_command   *init_cmd(void)
+{
+    t_command *cmd;
+
+    cmd = malloc(sizeof(t_command));
+    if (!cmd)
+        return (NULL);
+    cmd->cmd = NULL;
+    cmd->cmd_args = NULL;
+    cmd->redir = NULL;
+    cmd->next = NULL;
+    return (cmd);
+}
+
 void add_cmd(t_command **head, t_command *cmd)
 {
     t_command *node;
@@ -47,23 +61,6 @@ void ft_cmddelone(t_command *lst)
         return ;
     free(lst->cmd);
     ft_free_array(lst->cmd_args);
-    // ft_redirclear(&lst->redir);
+    ft_redirclear(&lst->redir);
     free(lst);
-}
-
-void ft_remove_cmd_node(t_command *lst, t_command *node)
-{
-    t_command *tmp;
-
-    tmp = lst;
-    while (tmp)
-    {
-        if (tmp->next == node)
-        {
-            tmp->next = node->next;
-            ft_cmddelone(node);
-            break ;
-        }
-        tmp = tmp->next;
-    }
 }

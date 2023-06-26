@@ -182,20 +182,21 @@ int							parse_errors(t_minishell *minishell);
 int							is_quote(char c);
 int							is_special_character(char c);
 // parser/build_cmd_struct.c
+int							count_args(t_token **tkn);
+void						assign_args(t_command *cmd, t_token **tkn);
+void						assing_redirs(t_command *cmd, t_token **tkn);
 void						build_command_structs(t_minishell *minishell);
-
-
 // parser/cmd_lst_utils.c
 void						add_cmd(t_command **head, t_command *cmd);
 void						ft_cmdclear(t_command **lst);
 void						ft_cmddelone(t_command *lst);
-void						ft_remove_cmd_node(t_command *lst, t_command *node);
+t_command					*init_cmd(void);
 t_command					*ft_cmdlast(t_command *lst);
 //  parser/redir_lst_utils.c
 void						add_redir(t_redir **head, t_redir *redir);
 void						ft_redirclear(t_redir **lst);
 void						ft_redirdelone(t_redir *lst);
-void						ft_remove_redir_node(t_redir *lst, t_redir *node);
+t_redir						*init_redir(void);
 t_redir						*ft_redir_last(t_redir *lst);
 // expander/expander.c
 char						*expand_token(t_minishell *minishell, char *token);

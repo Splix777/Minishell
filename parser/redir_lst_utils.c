@@ -1,5 +1,18 @@
 #include "../include/minishell.h"
 
+t_redir *init_redir(void)
+{
+    t_redir *redir;
+
+    redir = malloc(sizeof(t_redir));
+    if (!redir)
+        return (NULL);
+    redir->type = 0;
+    redir->file = NULL;
+    redir->next = NULL;
+    return (redir);
+}
+
 void add_redir(t_redir **head, t_redir *redir)
 {
     t_redir *node;
@@ -47,21 +60,4 @@ void ft_redirdelone(t_redir *lst)
         return ;
     free(lst->file);
     free(lst);
-}
-
-void ft_remove_redir_node(t_redir *lst, t_redir *node)
-{
-    t_redir *tmp;
-
-    tmp = lst;
-    while (tmp)
-    {
-        if (tmp->next == node)
-        {
-            tmp->next = node->next;
-            ft_redirdelone(node);
-            break ;
-        }
-        tmp = tmp->next;
-    }
 }

@@ -35,11 +35,14 @@ int main(int argc, char **argv, char **envp)
             }
         }
         ft_tokenclear(&minishell->tokens);
+        ft_cmdclear(&minishell->command);
         free(minishell->line);
         free(minishell->prompt);
+
         minishell->prompt = display_prompt(minishell);
         minishell->line = readline(minishell->prompt);
     }
+    rl_clear_history();
     ft_exit(minishell);
 }
 
