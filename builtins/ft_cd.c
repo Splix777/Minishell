@@ -72,4 +72,6 @@ void	ft_cd(t_minishell *minishell)
 		return (expand_home(minishell, minishell->command->cmd_args[0]));
 	if (change_dir(minishell, minishell->command->cmd_args[0]) == -1)
 		minishell->exit_status = 1;
+	else
+		minishell->exit_status = 0;
 }
