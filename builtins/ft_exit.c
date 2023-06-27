@@ -43,6 +43,5 @@ void    ft_exit(t_minishell *minishell)
         free(minishell->prompt); 
     free(minishell);
     printf("exit\n");
-    printf("exit status: %d\n", exit_status);
     exit(exit_status);
 }
