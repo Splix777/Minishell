@@ -42,7 +42,6 @@ int main(int argc, char **argv, char **envp)
     rl_clear_history();
     ft_exit(minishell);
 }       
-        // Handle built-in commands separately
         
         // If not a built-in command, search and launch the executable
 
