@@ -44,4 +44,5 @@ void    ft_export(t_minishell *minishell)
             do_export(minishell, i);
         i++;
     }
+    minishell->exit_status = 0;
 }
