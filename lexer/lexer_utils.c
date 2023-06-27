@@ -8,16 +8,18 @@ static char    *remove_quotes(char *token)
 
     i = 0;
     j = 0;
+    if (token == NULL)
+        return (NULL);
     while (token[i + j])
     {
         if (token[i] == '\'' || token[i] == '\"')
             i++;
         j++;
     }
-    new_token =  malloc(sizeof(char) * (j + 1));
+    new_token =  ft_calloc((j + 1), sizeof(char));
     i = -1;
     j = 0;
-    while (token[++i])
+    while (token != NULL && token[++i])
     {
         while (token[i] == '\'' || token[i] == '\"')
             i++;
@@ -54,7 +56,8 @@ int make_command(t_minishell *minishell, t_token **head, char *line, int i)
     j = 0;
     if (is_special_character(line[i]) == FALSE && ft_isspace(line[i]) == FALSE)
     {
-        while (is_special_character(line[i + j]) == FALSE && line[i + j] && ft_isspace(line[i + j]) == FALSE)
+        while (is_special_character(line[i + j]) == FALSE && line[i + j]
+            && ft_isspace(line[i + j]) == FALSE && is_quote(line[i + j]) == FALSE)
             j++;
         token = ft_substr(line, i, j);
         token = remove_quotes(token);

@@ -5,9 +5,9 @@ void ft_free_array(char **array)
     int i;
 
     i = 0;
-    if (array)
+    if (array != NULL)
     {
-        while (array[i])
+        while (array[i] != NULL)
         {
             free(array[i]);
             i++;

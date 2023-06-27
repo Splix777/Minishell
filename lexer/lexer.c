@@ -7,7 +7,7 @@ t_token	*tokenize_line(t_minishell *minishell, char *line)
 
 	i = 0;
 	head = NULL;
-	while (line[i])
+	while (line != NULL && line[i])
 	{
 		if (is_special_character(line[i]) == FALSE && !is_quote(line[i]))
 			i += make_command(minishell, &head, line, i);
@@ -110,7 +110,7 @@ int	parse_command(t_minishell *minishell)
 	minishell->tokens = tokenize_line(minishell, minishell->line);
 	if (parse_errors(minishell) == FALSE)
 		return (FALSE);
-	print_tokens(minishell->tokens);
 	label_tokens(minishell->tokens);
+	print_tokens(minishell->tokens);
 	return (TRUE);
 }
