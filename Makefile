@@ -1,8 +1,8 @@
 NAME = minishell
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
-LDFLAGS = -lreadline
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
+LDFLAGS = -lreadline -lft -lftprintf
 
 RM = rm -f
 
@@ -31,6 +31,9 @@ SRCS = main.c \
 	   parser/redir_lst_utils.c \
 	   expander/expander.c \
 	   executor/executor.c \
+	   executor/open_files.c \
+	   executor/exec_builtins.c \
+	   executor/do_heredoc.c \
 	   utils/general_utils.c \
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
@@ -42,12 +45,14 @@ RESET = \033[0m
 CHECKMARK = ✔
 
 LIBFT_DIR = libft
+PRINTF_DIR = ft_printf
 LIBFT = $(LIBFT_DIR)/libft.a
+PRINTF = $(PRINTF_DIR)/libftprintf.a
 
 all: $(NAME)
 
-$(NAME): $(OBJS) $(LIBFT)
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) $(LDFLAGS) -lft
+$(NAME): $(OBJS) $(LIBFT) $(PRINTF)
+	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -L$(PRINTF_DIR) $(LDFLAGS)
 	@echo "$(GREEN)$(CHECKMARK) $(NAME) created.$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -57,14 +62,19 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(LIBFT):
 	@make -C $(LIBFT_DIR)
 
+$(PRINTF):
+	@make -C $(PRINTF_DIR)
+
 clean:
 	@$(RM) -r $(OBJ_DIR)
 	@make -C $(LIBFT_DIR) clean
+	@make -C $(PRINTF_DIR) clean
 	@echo "$(YELLOW)$(CHECKMARK) $(NAME) cleaned.$(RESET)"
 
 fclean: clean
 	@$(RM) $(NAME)
 	@make -C $(LIBFT_DIR) fclean
+	@make -C $(PRINTF_DIR) fclean
 	@echo "$(RED)$(CHECKMARK) $(NAME) removed.$(RESET)"
 
 re: fclean all

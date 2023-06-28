@@ -1,18 +1,5 @@
 #include "../include/minishell.h"
 
-t_redir *init_redir(void)
-{
-    t_redir *redir;
-
-    redir = malloc(sizeof(t_redir));
-    if (!redir)
-        return (NULL);
-    redir->type = 0;
-    redir->file = NULL;
-    redir->next = NULL;
-    return (redir);
-}
-
 void add_redir(t_redir **head, t_redir *redir)
 {
     t_redir *node;

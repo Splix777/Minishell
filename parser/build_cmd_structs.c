@@ -55,6 +55,9 @@ void    assign_args(t_command *cmd, t_token **tkn)
 
     arg_count = count_args(tkn);
     cmd->cmd_args = malloc(sizeof(char *) * (arg_count + 1));
+    if (!cmd->cmd_args)
+        return ;
+    memset(cmd->cmd_args, 0, sizeof(char *) * (arg_count + 1));
     i = 0;
     while ((*tkn)->type == COMMAND_ARG)
     {
@@ -72,9 +75,13 @@ void    assing_redirs(t_command *cmd, t_token **tkn)
 {
     t_redir *redir;
 
-    redir = init_redir();
+    redir = malloc(sizeof(t_redir));
+    if (!redir)
+        return ;
+    memset(redir, 0, sizeof(t_redir));
     redir->type = (*tkn)->type;
     redir->file = ft_strdup((*tkn)->next->token);
+    redir->next = NULL;
     add_redir(&cmd->redir, redir);
 }
 

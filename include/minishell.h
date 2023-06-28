@@ -3,6 +3,8 @@
 
 // libft
 # include "../libft/libft.h"
+// printf
+# include "../ft_printf/ft_printf.h"
 // readline, add_history
 # include <readline/history.h>
 # include <readline/readline.h>
@@ -88,6 +90,8 @@ typedef struct s_command
 {
 	char					*cmd;
 	char					**cmd_args;
+	int						fdin;
+	int						fdout;
 	struct s_redir			*redir;
 	struct s_command		*next;
 }							t_command;
@@ -197,12 +201,25 @@ t_command					*ft_cmdlast(t_command *lst);
 void						add_redir(t_redir **head, t_redir *redir);
 void						ft_redirclear(t_redir **lst);
 void						ft_redirdelone(t_redir *lst);
-t_redir						*init_redir(void);
 t_redir						*ft_redir_last(t_redir *lst);
 // expander/expander.c
 char						*expand_token(t_minishell *minishell, char *token);
 // executor/executor.c
 void						executor(t_minishell *minishell);
+
+// executor/open_files.c
+int open_infile(char *file);
+int open_outfile(char *file);
+int open_append(char *file);
+void    open_fds(t_minishell *minishell, t_command *cmd);
+// executor/exec_builtins.c
+int							is_builtin(t_minishell *minishell);
+void						execute_builtin(t_minishell *minishell);
+// executor/do_heredoc.c
+int do_heredoc(t_minishell *minishell, char *delimiter);
+int open_heredoc(t_minishell *minishell, char *delimiter);
+
+
 
 // builtins/ft_cd.c
 void						ft_cd(t_minishell *minishell);

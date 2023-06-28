@@ -7,6 +7,9 @@ t_command   *init_cmd(void)
     cmd = malloc(sizeof(t_command));
     if (!cmd)
         return (NULL);
+    memset(cmd, 0, sizeof(t_command));
+    cmd->fdin = STDIN_FILENO;
+    cmd->fdout = STDOUT_FILENO;
     cmd->cmd = NULL;
     cmd->cmd_args = NULL;
     cmd->redir = NULL;
@@ -60,8 +63,8 @@ void ft_cmddelone(t_command *lst)
     if (!lst)
         return ;
     free(lst->cmd);
-    if (lst->cmd_args != NULL)
-        ft_free_array(lst->cmd_args);
+    //if (lst->cmd_args)
+    ft_free_array(lst->cmd_args);
     ft_redirclear(&lst->redir);
     free(lst);
 }

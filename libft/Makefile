@@ -77,3 +77,5 @@ re: fclean all
 bonus: $(OBJECTS_BONUS_PREFIXED)
 	@ar r $(NAME) $(OBJECTS_BONUS_PREFIXED)
 	@echo "Bonus Complete"
+
+.PHONY: all clean fclean re bonus
