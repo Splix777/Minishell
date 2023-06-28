@@ -38,7 +38,7 @@ void    open_fds(t_minishell *minishell, t_command *cmd)
     }
     while (redir)
     {
-        if ((redir->type == REDIR_IN) && !error)
+        if (redir->type == REDIR_IN && !error)
             cmd->fdin = open_infile(redir->file);
         else if ((redir->type == REDIR_OUT) && !error)
             cmd->fdout = open_outfile(redir->file);
@@ -46,15 +46,22 @@ void    open_fds(t_minishell *minishell, t_command *cmd)
             cmd->fdout = open_append(redir->file);
         else if (redir->type == HEREDOC)
             cmd->fdin = open_heredoc(minishell, redir->file);
-        if (cmd->fdin < 0 || cmd->fdout < 0)
+        if (redir->next && !error && (redir->next->type == REDIR_IN || redir->next->type == HEREDOC))
+            close(cmd->fdin);
+        if (redir->next && !error && (redir->next->type == REDIR_OUT || redir->next->type == APPEND))
+            close(cmd->fdout);
+        if (cmd->fdin < 0 && !error)
         {
             error = 1;
             perror(redir->file);
+            cmd->fdin = STDIN_FILENO;
         }
-        if (redir->next && (redir->next->type == REDIR_IN || redir->next->type == HEREDOC))
-            close(cmd->fdin);
-        if (redir->next && (redir->next->type == REDIR_OUT || redir->next->type == APPEND))
-            close(cmd->fdout);
+        if (cmd->fdout < 0 && !error)
+        {
+            error = 1;
+            perror(redir->file);
+            cmd->fdout = STDOUT_FILENO;
+        }
         redir = redir->next;
     }
 }
