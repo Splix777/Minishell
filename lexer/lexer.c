@@ -111,6 +111,6 @@ int	parse_command(t_minishell *minishell)
 	if (parse_errors(minishell) == FALSE)
 		return (FALSE);
 	label_tokens(minishell->tokens);
-	print_tokens(minishell->tokens);
 	return (TRUE);
+	print_tokens(minishell->tokens);
 }

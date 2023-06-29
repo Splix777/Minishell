@@ -203,22 +203,37 @@ void						ft_redirclear(t_redir **lst);
 void						ft_redirdelone(t_redir *lst);
 t_redir						*ft_redir_last(t_redir *lst);
 // expander/expander.c
-char						*expand_token(t_minishell *minishell, char *token);
+char
+						*expand_token(t_minishell *minishell, char *token);
+
+
+
 // executor/executor.c
 void						executor(t_minishell *minishell);
-
+t_command   *multi_execute(t_minishell *minishell, t_command *cmd);
+void    create_pipe(t_minishell *minishell, t_command *cmd);
+void    handle_redir(t_command *cmd, int fd);
 // executor/open_files.c
 int open_infile(char *file);
 int open_outfile(char *file);
 int open_append(char *file);
+int    redir_loop(t_minishell *minishell, t_redir *redir, int error);
 void    open_fds(t_minishell *minishell, t_command *cmd);
 // executor/exec_builtins.c
 int							is_builtin(t_minishell *minishell);
 void						execute_builtin(t_minishell *minishell);
 // executor/do_heredoc.c
-int do_heredoc(t_minishell *minishell, char *delimiter);
+void do_heredoc(t_minishell *minishell, char *delimiter);
 int open_heredoc(t_minishell *minishell, char *delimiter);
-
+// executor/exec_utils..c
+pid_t   make_fork(void);
+void    make_pipe(int fd[2]);
+void    wait_childs(t_minishell *minishell);
+// executor/childs.c
+void execute_cmd(t_minishell *minishell, t_command *cmd);
+char    *check_cmd(char *cm, char **paths);
+void    exit_errors(t_minishell *minishell, char *str, int code);
+char    **convert_list_to_array(t_env *list);
 
 
 // builtins/ft_cd.c

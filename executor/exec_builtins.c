@@ -27,15 +27,19 @@ void    execute_builtin(t_minishell *minishell)
     if (!minishell->command->cmd)
         return ;
     i = 0;
-    open_fds(minishell, minishell->command);
     tmpin = dup(STDIN_FILENO);
     tmpout = dup(STDOUT_FILENO);
-    if (minishell->command->fdin < 0 || minishell->command->fdout < 0)
-        return ;
+    open_fds(minishell, minishell->command);
     if (minishell->command->fdin != STDIN_FILENO)
+    {
         dup2(minishell->command->fdin, STDIN_FILENO);
+        close(minishell->command->fdin);
+    }
     if (minishell->command->fdout != STDOUT_FILENO)
+    {
         dup2(minishell->command->fdout, STDOUT_FILENO);
+        close(minishell->command->fdout);
+    }
     while (i < 7)
     {
         if (!ft_strcmp(minishell->command->cmd, minishell->builtins->cmd[i]))

@@ -34,6 +34,8 @@ SRCS = main.c \
 	   executor/open_files.c \
 	   executor/exec_builtins.c \
 	   executor/do_heredoc.c \
+	   executor/exec_utils.c \
+	   executor/childs.c \
 	   utils/general_utils.c \
 
 OBJS = $(SRCS:%.c=$(OBJ_DIR)/%.o)
