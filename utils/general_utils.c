@@ -42,3 +42,15 @@ char    *ft_strjoin_free(char *s1, char *s2)
     free(s1);
     return (new_str);
 }
+
+int ft_arraylen(char **array)
+{
+    int i;
+
+    i = 0;
+    if (!array)
+        return (0);
+    while (array[i])
+        i++;
+    return (i);
+}

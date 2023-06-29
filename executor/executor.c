@@ -59,7 +59,7 @@ void    execute_last_cmd(t_minishell *minishell, t_command *cmd)
 	}
 	close(cmd->fdin);
 	close(cmd->fdout);
-	//close(STDIN_FILENO);
+	close(STDIN_FILENO);
 }
 
 t_command   *multi_execute(t_minishell *minishell, t_command *cmd)

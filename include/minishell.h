@@ -146,6 +146,7 @@ t_env						*init_env(char **envp);
 t_builtins					*init_builtins(void);
 t_process					*init_process(void);
 // initialize/env_lst_utils.c
+int							ft_envsize(t_env *env);
 void						add_env(t_env **head, t_env *env);
 void						ft_envclear(t_env **lst);
 void						ft_envdelone(t_env *lst);
@@ -230,10 +231,11 @@ pid_t   make_fork(void);
 void    make_pipe(int fd[2]);
 void    wait_childs(t_minishell *minishell);
 // executor/childs.c
-void execute_cmd(t_minishell *minishell, t_command *cmd);
 char    *check_cmd(char *cm, char **paths);
-void    exit_errors(t_minishell *minishell, char *str, int code);
 char    **convert_list_to_array(t_env *list);
+char    **add_cmd_to_args(char *cmd, char **args);
+void    exit_errors(t_minishell *minishell, char *str, int code);
+void	execute_cmd(t_minishell *minishell, t_command *cmd);
 
 
 // builtins/ft_cd.c
@@ -254,4 +256,5 @@ void						ft_exit(t_minishell *minishell);
 void						ft_free_array(char **array);
 char						*ft_strjoin_free(char *s1, char *s2);
 int							line_empty(char *line);
+int							ft_arraylen(char **array);
 #endif

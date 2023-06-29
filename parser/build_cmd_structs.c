@@ -15,38 +15,38 @@ int count_args(t_token **tkn)
     return (count);
 }
 
-// static void    print_cmd_token(t_minishell *minishell)
-// {
-//     t_command   *cmd;
-//     t_redir     *redir;
-//     int         i;
+static void    print_cmd_token(t_minishell *minishell)
+{
+    t_command   *cmd;
+    t_redir     *redir;
+    int         i;
 
-//     cmd = minishell->command;
-//     while (cmd)
-//     {
-//         printf("\n");
-//         printf("cmd: [%s]\n", cmd->cmd);
-//         printf("    cmd_args:");
-//         i = 0;
-//         while (cmd->cmd_args && cmd->cmd_args[i])
-//         {
-//             printf("[%s]", cmd->cmd_args[i]);
-//             i++;
-//         }
-//         printf("\n");
-//         printf("redirs: \n");
-//         redir = cmd->redir;
-//         while (redir)
-//         {
-//             printf("    type: [%d], file: [%s]\n", redir->type, redir->file);
-//             redir = redir->next;
-//         }
-//         printf("\n");
-//         if (cmd->next == NULL)
-//             break;
-//         cmd = cmd->next;
-//     }
-// }
+    cmd = minishell->command;
+    while (cmd)
+    {
+        printf("\n");
+        printf("cmd: [%s]\n", cmd->cmd);
+        printf("    cmd_args:");
+        i = 0;
+        while (cmd->cmd_args && cmd->cmd_args[i])
+        {
+            printf("[%s]", cmd->cmd_args[i]);
+            i++;
+        }
+        printf("\n");
+        printf("redirs: \n");
+        redir = cmd->redir;
+        while (redir)
+        {
+            printf("    type: [%d], file: [%s]\n", redir->type, redir->file);
+            redir = redir->next;
+        }
+        printf("\n");
+        if (cmd->next == NULL)
+            break;
+        cmd = cmd->next;
+    }
+}
 
 void    assign_args(t_command *cmd, t_token **tkn)
 {
@@ -110,5 +110,5 @@ void    build_command_structs(t_minishell *minishell)
             add_cmd(&minishell->command, cmd);
         tkn = tkn->next;
     }
-    //print_cmd_token(minishell);
+    print_cmd_token(minishell);
 }

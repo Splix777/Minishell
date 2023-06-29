@@ -1,5 +1,20 @@
 #include "../include/minishell.h"
 
+int ft_envsize(t_env *env)
+{
+    int i;
+    t_env *tmp;
+
+    i = 0;
+    tmp = env;
+    while (tmp)
+    {
+        i++;
+        tmp = tmp->next;
+    }
+    return (i);
+}
+
 void add_env(t_env **head, t_env *env)
 {
     t_env *node;
