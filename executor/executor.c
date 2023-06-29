@@ -42,19 +42,20 @@ void    create_pipe(t_minishell *minishell, t_command *cmd)
 
 void    execute_last_cmd(t_minishell *minishell, t_command *cmd)
 {
-    if (!make_fork())
+    minishell->process->pid = make_fork();
+    if (minishell->process->pid == 0)
 	{
-    if (cmd->fdin < 0 || cmd->fdout < 0)
-        exit(errno);
-    if (cmd->fdin != STDIN_FILENO)
-        dup2(cmd->fdin, STDIN_FILENO);
-    if (cmd->fdout != STDOUT_FILENO)
-        dup2(cmd->fdout, STDOUT_FILENO);
-    if (cmd->fdin != STDIN_FILENO)
-        close(cmd->fdin);
-    if (cmd->fdout != STDOUT_FILENO)
-        close(cmd->fdout);
-    execute_cmd(minishell, cmd);
+        if (cmd->fdin < 0 || cmd->fdout < 0)
+            exit(errno);
+        if (cmd->fdin != STDIN_FILENO)
+            dup2(cmd->fdin, STDIN_FILENO);
+        if (cmd->fdout != STDOUT_FILENO)
+            dup2(cmd->fdout, STDOUT_FILENO);
+        if (cmd->fdin != STDIN_FILENO)
+            close(cmd->fdin);
+        if (cmd->fdout != STDOUT_FILENO)
+            close(cmd->fdout);
+        execute_cmd(minishell, cmd);
 	}
 	close(cmd->fdin);
 	close(cmd->fdout);
