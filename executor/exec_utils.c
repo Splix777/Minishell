@@ -27,16 +27,17 @@ void    make_pipe(int fd[2])
 
 void    wait_childs(t_minishell *minishell, pid_t pid, int status)
 {
-    while (1)
+    (void) pid;
+    if (WIFSIGNALED(status))
     {
-        pid = waitpid(pid, &status, 0);
-        if (pid < 0)
-            break ;
-        if (WIFEXITED(status))
-            minishell->exit_status = WEXITSTATUS(status);
-        if (WIFSIGNALED(status))
-            minishell->exit_status = WTERMSIG(status) + 128;
-        if (pid == 0)
-            break ;
+        if (WTERMSIG(status) == 2)
+            minishell->exit_status = 130;
+        else if (WTERMSIG(status) == 3)
+        {
+            ft_putstr_fd("Quit (core dumped)\n", STDERR_FILENO);
+            minishell->exit_status = 131;
+        }
     }
+    else
+        minishell->exit_status = WEXITSTATUS(status);
 }

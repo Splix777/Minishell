@@ -206,9 +206,6 @@ t_redir						*ft_redir_last(t_redir *lst);
 // expander/expander.c
 char
 						*expand_token(t_minishell *minishell, char *token);
-
-
-
 // executor/executor.c
 void						executor(t_minishell *minishell);
 t_command   *multi_execute(t_minishell *minishell, t_command *cmd);
@@ -236,8 +233,6 @@ char    **convert_list_to_array(t_env *list);
 char    **add_cmd_to_args(char *cmd, char **args);
 void    exit_errors(t_minishell *minishell, char *str, int code);
 void	execute_cmd(t_minishell *minishell, t_command *cmd);
-
-
 // builtins/ft_cd.c
 void						ft_cd(t_minishell *minishell);
 // builtins/ft_echo.c
@@ -257,4 +252,8 @@ void						ft_free_array(char **array);
 char						*ft_strjoin_free(char *s1, char *s2);
 int							line_empty(char *line);
 int							ft_arraylen(char **array);
+// main.c
+void						set_shlvl(t_minishell *minishell);
+void						reset_loop(t_minishell *minishell);
+
 #endif
