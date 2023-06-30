@@ -190,7 +190,7 @@ int							is_special_character(char c);
 // parser/build_cmd_struct.c
 int							count_args(t_token **tkn);
 void						assign_args(t_command *cmd, t_token **tkn);
-void						assing_redirs(t_command *cmd, t_token **tkn);
+void						assing_redirs(t_minishell *minishell, t_command *cmd, t_token **tkn);
 void						build_command_structs(t_minishell *minishell);
 // parser/cmd_lst_utils.c
 void						add_cmd(t_command **head, t_command *cmd);
@@ -229,7 +229,7 @@ int open_heredoc(t_minishell *minishell, char *delimiter);
 // executor/exec_utils..c
 pid_t   make_fork(void);
 void    make_pipe(int fd[2]);
-void    wait_childs(t_minishell *minishell);
+void    wait_childs(t_minishell *minishell, pid_t pid, int status);
 // executor/childs.c
 char    *check_cmd(char *cm, char **paths);
 char    **convert_list_to_array(t_env *list);

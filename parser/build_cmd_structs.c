@@ -71,7 +71,7 @@ void    assign_args(t_command *cmd, t_token **tkn)
     cmd->cmd_args[arg_count] = NULL;
 }
 
-void    assing_redirs(t_command *cmd, t_token **tkn)
+void    assing_redirs(t_minishell *minishell, t_command *cmd, t_token **tkn)
 {
     t_redir *redir;
 
@@ -80,6 +80,8 @@ void    assing_redirs(t_command *cmd, t_token **tkn)
         return ;
     memset(redir, 0, sizeof(t_redir));
     redir->type = (*tkn)->type;
+    if (redir->type == HEREDOC)
+        cmd->fdin = open_heredoc(minishell, (*tkn)->next->token);
     redir->file = ft_strdup((*tkn)->next->token);
     redir->next = NULL;
     add_redir(&cmd->redir, redir);
@@ -99,7 +101,7 @@ void    build_command_structs(t_minishell *minishell)
         else if (tkn->type == COMMAND_ARG)
             assign_args(cmd, &tkn);
         else if (tkn->type == REDIR_IN || tkn->type == REDIR_OUT || tkn->type == APPEND || tkn->type == HEREDOC)
-            assing_redirs(cmd, &tkn);
+            assing_redirs(minishell, cmd, &tkn);
         else if (tkn->type == PIPE)
         {
             add_cmd(&minishell->command, cmd);

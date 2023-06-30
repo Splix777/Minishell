@@ -25,18 +25,18 @@ void    make_pipe(int fd[2])
     }
 }
 
-void    wait_childs(t_minishell *minishell)
+void    wait_childs(t_minishell *minishell, pid_t pid, int status)
 {
     while (1)
     {
-        minishell->process->pid = waitpid(-1, &minishell->process->status, 0);
-        if (minishell->process->pid < 0)
+        pid = waitpid(pid, &status, 0);
+        if (pid < 0)
             break ;
-        if (WIFEXITED(minishell->process->status))
-            minishell->exit_status = WEXITSTATUS(minishell->process->status);
-        if (WIFSIGNALED(minishell->process->status))
-            minishell->exit_status = WTERMSIG(minishell->process->status) + 128;
-        if (minishell->process->pid == 0)
+        if (WIFEXITED(status))
+            minishell->exit_status = WEXITSTATUS(status);
+        if (WIFSIGNALED(status))
+            minishell->exit_status = WTERMSIG(status) + 128;
+        if (pid == 0)
             break ;
     }
 }

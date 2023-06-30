@@ -91,7 +91,7 @@ void    executor(t_minishell *minishell)
         {
             while (cmd)
                 cmd = multi_execute(minishell, cmd);
-            wait_childs(minishell);
+            wait_childs(minishell, pid, status);
         }
         waitpid(pid, &status, 0);
     }
