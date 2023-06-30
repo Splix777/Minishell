@@ -1,9 +1,9 @@
 #include "./include/minishell.h"
 
-void valgrind(void)
-{
-    system("leaks minishell");
-}
+// void valgrind(void)
+// {
+//     system("leaks minishell");
+// }
 
 void reset_loop(t_minishell *minishell)
 {
@@ -21,7 +21,7 @@ int main(int argc, char **argv, char **envp)
     (void)      argc;
     (void)      argv;
 
-    atexit(valgrind);
+    //atexit(valgrind);
     minishell = init_structs(envp);
     minishell->prompt = display_prompt(minishell);
     minishell->line = readline(minishell->prompt);

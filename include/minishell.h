@@ -218,7 +218,7 @@ void    handle_redir(t_command *cmd, int fd);
 int open_infile(char *file);
 int open_outfile(char *file);
 int open_append(char *file);
-int    redir_loop(t_minishell *minishell, t_redir *redir, int error);
+int    redir_loop(t_minishell *minishell, t_command *command, t_redir *redir, int error);
 void    open_fds(t_minishell *minishell, t_command *cmd);
 // executor/exec_builtins.c
 int							is_builtin(t_minishell *minishell);

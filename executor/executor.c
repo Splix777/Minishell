@@ -20,11 +20,12 @@ void    handle_redir(t_command *cmd, int fd)
 
 void    create_pipe(t_minishell *minishell, t_command *cmd)
 {
-    int fd[2];
+    int     fd[2];
+    pid_t   pid;
 
     make_pipe(fd);
-    minishell->process->pid = make_fork();
-    if (minishell->process->pid == 0)
+    pid = make_fork();
+    if (pid == 0)
     {
         close(fd[READ_END]);
         handle_redir(cmd, fd[WRITE_END]);
@@ -42,8 +43,10 @@ void    create_pipe(t_minishell *minishell, t_command *cmd)
 
 void    execute_last_cmd(t_minishell *minishell, t_command *cmd)
 {
-    minishell->process->pid = make_fork();
-    if (minishell->process->pid == 0)
+    pid_t   pid;
+
+    pid = make_fork();
+    if (pid == 0)
 	{
         if (cmd->fdin < 0 || cmd->fdout < 0)
             exit(errno);
@@ -57,9 +60,9 @@ void    execute_last_cmd(t_minishell *minishell, t_command *cmd)
             close(cmd->fdout);
         execute_cmd(minishell, cmd);
 	}
-	close(cmd->fdin);
-	close(cmd->fdout);
-	close(STDIN_FILENO);
+    close(cmd->fdin);
+    close(cmd->fdout);
+    close(STDIN_FILENO);
 }
 
 t_command   *multi_execute(t_minishell *minishell, t_command *cmd)
@@ -75,19 +78,21 @@ t_command   *multi_execute(t_minishell *minishell, t_command *cmd)
 void    executor(t_minishell *minishell)
 {
     t_command   *cmd;
+    pid_t       pid;
+    int         status;
 
     cmd = minishell->command;
     if (!minishell->command->next && is_builtin(minishell) == TRUE)
         execute_builtin(minishell);
     else
     {
-        minishell->process->pid = make_fork();
-        if (minishell->process->pid == 0)
+        pid = make_fork();
+        if (pid == 0)
         {
             while (cmd)
                 cmd = multi_execute(minishell, cmd);
             wait_childs(minishell);
         }
-        waitpid(minishell->process->pid, &minishell->process->status, 0);
+        waitpid(pid, &status, 0);
     }
 }

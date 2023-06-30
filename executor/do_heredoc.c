@@ -33,19 +33,19 @@ void do_heredoc(t_minishell *minishell, char *delimiter)
 int open_heredoc(t_minishell *minishell, char *delimiter)
 {
     int fd;
+    pid_t pid;
+    int status;
 
-    minishell->process->pid = fork();
+    pid = make_fork();
     fd = 0;
-    if (minishell->process->pid == 0)
+    if (pid == 0)
     {
         do_heredoc(minishell, delimiter);
         exit(0);
     }
-    else if (minishell->process->pid < 0)
-        ft_putendl_fd("Error: Fork failed", 2);
     else
-        waitpid(minishell->process->pid, &minishell->process->status, 0);
-    minishell->exit_status = WEXITSTATUS(minishell->process->status);
+        waitpid(pid, &status, 0);
+    minishell->exit_status = WEXITSTATUS(status);
     fd = open("/tmp/.heredoc", O_RDONLY);
     return (fd);
 }
