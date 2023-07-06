@@ -74,7 +74,7 @@ int main(int argc, char **argv, char **envp)
         }
         reset_loop(minishell);
     }
-    rl_clear_history();
+    clear_history();
     ft_exit(minishell);
 }       
 
